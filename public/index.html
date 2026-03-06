@@ -1326,9 +1326,9 @@ function openModal(view, hint) {
     existing.style.display = 'flex';
     var mount = document.getElementById('clerkMount');
     if (view === 'signup') {
-      clerk.mountSignUp(mount, { afterSignUpUrl: window.location.href });
+      clerk.mountSignUp(mount, { routing: 'virtual' });
     } else {
-      clerk.mountSignIn(mount, { afterSignInUrl: window.location.href });
+      clerk.mountSignIn(mount, { routing: 'virtual' });
     }
     return;
   }
