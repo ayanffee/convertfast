@@ -1628,10 +1628,12 @@ window.addEventListener('load', function() {
 });
 
 async function onRealSignedIn(user) {
-  try {
-    var token = await window.Clerk.session.getToken();
-    var res   = await fetch('/api/me', { headers: { Authorization: 'Bearer ' + token } });
-    var plan  = res.ok ? (await res.json()).plan || 'free' : 'free';
+  window.Clerk.session.getToken().then(function(token) {
+    return fetch('/api/me', { headers: { Authorization: 'Bearer ' + token } });
+  }).then(function(res) {
+    return res.ok ? res.json() : { plan: 'free' };
+  }).then(function(data) {
+    var plan = data.plan || 'free';
     _session  = {
       email:  user.primaryEmailAddress?.emailAddress || user.username || '',
       name:   user.fullName || '',
@@ -1639,7 +1641,7 @@ async function onRealSignedIn(user) {
       plan:   plan
     };
     completeSignIn(_session);
-  } catch(e) { renderAuthBar(); }
+  }).catch(function() { renderAuthBar(); });
 }
 
 function onRealSignedOut() {
@@ -1648,7 +1650,7 @@ function onRealSignedOut() {
 }
 
 /* ── Stripe Checkout ── */
-async async function startCheckout(plan) {
+async function startCheckout(plan) {
   // If not signed in, gate and resume after sign-in
   if (!window.__clerk || !window.__clerk.user) {
     _pendingAction = function() { startCheckout(plan); };
@@ -1660,21 +1662,23 @@ async async function startCheckout(plan) {
   var orig = btn ? btn.textContent : '';
   if (btn) { btn.textContent = 'Redirecting…'; btn.disabled = true; }
 
-  try {
-    var token  = await window.__clerk.session.getToken();
-    var annual = !!(document.getElementById('annToggle') || {}).checked;
-    var res    = await fetch('/api/create-checkout', {
+  var annual = !!(document.getElementById('annToggle') || {}).checked;
+
+  window.__clerk.session.getToken().then(function(token) {
+    return fetch('/api/create-checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
       body: JSON.stringify({ plan: plan, annual: annual })
     });
-    var data = await res.json();
+  }).then(function(res) {
+    return res.json();
+  }).then(function(data) {
     if (data.url) window.location.href = data.url;
     else throw new Error(data.error || 'No checkout URL');
-  } catch(e) {
+  }).catch(function(e) {
     showToast('Checkout error: ' + e.message, 'err');
     if (btn) { btn.textContent = orig; btn.disabled = false; }
-  }
+  });
 }
 </script>
 </body>
