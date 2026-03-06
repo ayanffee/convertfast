@@ -32,10 +32,11 @@ export default async function handler(req, res) {
 
   let userId, userEmail;
   try {
-    const payload = await clerk.verifyToken(token, { authorizedParties: ['https://convertfast.vercel.app', 'https://dear-rattler-30.clerk.accounts.dev'] });
+    const { createClerkClient } = await import('@clerk/backend');
+    const clerkClient = createClerkClient({ secretKey: process.env.CLERK_SECRET_KEY });
+    const payload = await clerkClient.verifyToken(token);
     userId = payload.sub;
-    // Fetch full user to get email
-    const user = await clerk.users.getUser(userId);
+    const user = await clerkClient.users.getUser(userId);
     userEmail = user.emailAddresses?.[0]?.emailAddress || '';
   } catch (e) {
     return res.status(401).json({ error: 'Invalid token: ' + e.message });
