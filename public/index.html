@@ -1654,7 +1654,7 @@ async function startCheckout(plan) {
   // If not signed in, gate and resume after sign-in
   if (!window.__clerk || !window.__clerk.user) {
     _pendingAction = function() { startCheckout(plan); };
-    showModal('signin', 'Sign in to upgrade to ' + plan);
+    openModal('signin');
     return;
   }
 
