@@ -32,7 +32,7 @@ export default async function handler(req, res) {
 
   let userId, userEmail;
   try {
-    const payload = await clerk.verifyToken(token);
+    const payload = await clerk.verifyToken(token, { authorizedParties: ['https://convertfast.vercel.app', 'https://dear-rattler-30.clerk.accounts.dev'] });
     userId = payload.sub;
     // Fetch full user to get email
     const user = await clerk.users.getUser(userId);
