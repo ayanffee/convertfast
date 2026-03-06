@@ -1676,6 +1676,8 @@ function onRealSignedOut() {
 }
 
 /* ── Stripe Checkout ── */
+function showToast(msg, type) { toast(msg, type); }
+
 async function startCheckout(plan) {
   var clerk = window.Clerk || window.__clerk;
   // If not signed in, gate and resume after sign-in
@@ -1693,19 +1695,21 @@ async function startCheckout(plan) {
 
   var session = clerk.session || (clerk.client && clerk.client.activeSessions && clerk.client.activeSessions[0]);
   if (!session) { showToast('Please sign in first', 'err'); if (btn) { btn.textContent = orig; btn.disabled = false; } return; }
-  session.getToken().then(function(token) {
+  window.Clerk.session.getToken({ template: undefined }).then(function(token) {
+    console.log('Token obtained:', token ? 'yes' : 'no');
     return fetch('/api/create-checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
       body: JSON.stringify({ plan: plan, annual: annual })
     });
   }).then(function(res) {
-    return res.json();
+    return res.json().then(function(d) { console.log('Checkout response:', d); return d; });
   }).then(function(data) {
     if (data.url) window.location.href = data.url;
-    else throw new Error(data.error || 'No checkout URL');
+    else { showToast('Error: ' + (data.error || 'No checkout URL'), 'err'); if (btn) { btn.textContent = orig; btn.disabled = false; } }
   }).catch(function(e) {
-    showToast('Checkout error: ' + e.message, 'err');
+    console.error('Checkout error:', e);
+    alert('Checkout error: ' + e.message);
     if (btn) { btn.textContent = orig; btn.disabled = false; }
   });
 }
