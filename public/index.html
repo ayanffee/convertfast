@@ -1641,11 +1641,12 @@ window.addEventListener('load', function() {
     if (window.Clerk) {
       clearInterval(poll);
       window.Clerk.load({}).then(function() {
-        window.__clerk = window.Clerk;
         window.Clerk.addListener(function(res) {
-          res.user ? onRealSignedIn(res.user) : onRealSignedOut();
+          if (res.user) { onRealSignedIn(res.user); } else { onRealSignedOut(); }
         });
-        window.Clerk.user ? onRealSignedIn(window.Clerk.user) : onRealSignedOut();
+        // Also check immediately on load
+        if (window.Clerk.user) onRealSignedIn(window.Clerk.user);
+        window.__clerk = window.Clerk;
       }).catch(function() { renderAuthBar(); });
     }
     if (attempts > 50) { clearInterval(poll); renderAuthBar(); }
@@ -1690,7 +1691,9 @@ async function startCheckout(plan) {
 
   var annual = !!(document.getElementById('annToggle') || {}).checked;
 
-  clerk.session.getToken().then(function(token) {
+  var session = clerk.session || (clerk.client && clerk.client.activeSessions && clerk.client.activeSessions[0]);
+  if (!session) { showToast('Please sign in first', 'err'); if (btn) { btn.textContent = orig; btn.disabled = false; } return; }
+  session.getToken().then(function(token) {
     return fetch('/api/create-checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
