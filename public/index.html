@@ -1303,7 +1303,7 @@ function clerkSignOut() {
   currentPlan = 'free';
   window.__imgMax = 10;
   renderAuthBar();
-  showToast('Signed out', 'info');
+  toast('Signed out', 'info');
 }
 
 /* ── Modal system ── */
@@ -1495,7 +1495,7 @@ function confirmPlan() {
     startCheckout('pro');
   } else {
     closeModal();
-    showToast('Welcome to ConvertFast! You are on the Free plan.', 'good');
+    toast('Welcome to ConvertFast! You are on the Free plan.', 'good');
     if (_pendingAction) {
       var action = _pendingAction;
       _pendingAction = null;
@@ -1530,7 +1530,7 @@ function submitSignIn() {
     };
     closeModal();
     completeSignIn(_session);
-    showToast('Welcome back!', 'good');
+    toast('Welcome back!', 'good');
   }, 800);
 }
 
@@ -1577,7 +1577,7 @@ function mockGoogleSignIn() {
     };
     closeModal();
     completeSignIn(_session);
-    showToast('Signed in with Google!', 'good');
+    toast('Signed in with Google!', 'good');
   }, 900);
 }
 
@@ -1676,8 +1676,6 @@ function onRealSignedOut() {
 }
 
 /* ── Stripe Checkout ── */
-function showToast(msg, type) { toast(msg, type); }
-
 async function startCheckout(plan) {
   var clerk = window.Clerk || window.__clerk;
   // If not signed in, gate and resume after sign-in
@@ -1694,7 +1692,7 @@ async function startCheckout(plan) {
   var annual = !!(document.getElementById('annToggle') || {}).checked;
 
   var session = clerk.session || (clerk.client && clerk.client.activeSessions && clerk.client.activeSessions[0]);
-  if (!session) { showToast('Please sign in first', 'err'); if (btn) { btn.textContent = orig; btn.disabled = false; } return; }
+  if (!session) { toast('Please sign in first', 'err'); if (btn) { btn.textContent = orig; btn.disabled = false; } return; }
   window.Clerk.session.getToken({ template: undefined }).then(function(token) {
     console.log('Token obtained:', token ? 'yes' : 'no');
     return fetch('/api/create-checkout', {
@@ -1706,7 +1704,7 @@ async function startCheckout(plan) {
     return res.json().then(function(d) { console.log('Checkout response:', d); return d; });
   }).then(function(data) {
     if (data.url) window.location.href = data.url;
-    else { showToast('Error: ' + (data.error || 'No checkout URL'), 'err'); if (btn) { btn.textContent = orig; btn.disabled = false; } }
+    else { toast('Error: ' + (data.error || 'No checkout URL'), 'err'); if (btn) { btn.textContent = orig; btn.disabled = false; } }
   }).catch(function(e) {
     console.error('Checkout error:', e);
     alert('Checkout error: ' + e.message);
