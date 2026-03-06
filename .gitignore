@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+
+# Local env files — NEVER commit these
+.env
+.env.local
+.env.production
+
+# Vercel
+.vercel/
+
+# OS
+.DS_Store
+Thumbs.db

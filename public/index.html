@@ -1,0 +1,1681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Bulk Image Converter — JPG PNG to WebP &amp; More | ConvertFast</title>
+<meta name="description" content="Convert JPG, PNG, WebP, GIF and BMP images in bulk — free, instant, private. No uploads, no sign-in. Resize, compress, strip EXIF and download as ZIP. The fastest bulk image converter online.">
+<meta name="keywords" content="bulk image converter, jpg to webp, png to jpg, image converter online, convert images to webp, free image converter, batch image converter, jpg converter, webp converter">
+<link rel="canonical" href="https://convertfast.io/">
+<meta name="robots" content="index, follow">
+<meta name="author" content="ConvertFast">
+<meta property="og:type"        content="website">
+<meta property="og:url"         content="https://convertfast.io/">
+<meta property="og:title"       content="ConvertFast — Free Bulk Image Converter Online">
+<meta property="og:description" content="Convert hundreds of images instantly in your browser. JPG, PNG, WebP, GIF, BMP. No uploads. No sign-in. 100% private.">
+<meta property="og:image"       content="https://convertfast.io/og-image.png">
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="ConvertFast — Free Bulk Image Converter Online">
+<meta name="twitter:description" content="Convert hundreds of images in your browser. No uploads. No sign-in. 100% private.">
+<meta name="twitter:image"       content="https://convertfast.io/og-image.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"ConvertFast","url":"https://convertfast.io","description":"Free bulk image converter. Convert JPG, PNG, WebP, GIF and BMP images instantly in your browser. No uploads, no sign-in.","applicationCategory":"MultimediaApplication","operatingSystem":"Web","offers":[{"@type":"Offer","name":"Free","price":"0","priceCurrency":"USD"},{"@type":"Offer","name":"Pro","price":"6","priceCurrency":"USD"},{"@type":"Offer","name":"Team","price":"19","priceCurrency":"USD"}],"featureList":["Bulk image conversion","JPG to WebP converter","PNG to JPG converter","Batch resize","Strip EXIF metadata","ZIP download","Browser-based no uploads"],"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"1247"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I convert JPG to WebP online for free?","acceptedAnswer":{"@type":"Answer","text":"Drag your JPG files into ConvertFast, select WebP as the output format, and click Convert. Your images are converted instantly in your browser — no upload, no account needed."}},{"@type":"Question","name":"Can I convert multiple images at once?","acceptedAnswer":{"@type":"Answer","text":"Yes. ConvertFast supports bulk conversion — up to 10 images on the free plan, unlimited on Pro. All images convert simultaneously and can be downloaded as a ZIP."}},{"@type":"Question","name":"Are my images uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. ConvertFast runs entirely in your browser. Your images never leave your device. Nothing is uploaded, stored, or shared."}},{"@type":"Question","name":"What image formats does ConvertFast support?","acceptedAnswer":{"@type":"Answer","text":"ConvertFast converts between JPG, PNG, WebP, GIF, BMP and AVIF formats in bulk."}}]}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script async crossorigin="anonymous"
+  data-clerk-publishable-key="pk_test_ZGVhci1yYXR0bGVyLTMwLmNsZXJrLmFjY291bnRzLmRldiQ"
+  src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
+  type="text/javascript"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0d0d;--s1:#161616;--s2:#1e1e1e;--s3:#252525;
+  --border:#2e2e2e;--b2:#3a3a3a;
+  --ink:#f0ece4;--muted:#6a6460;--muted2:#9a9490;
+  --yellow:#f5c842;--ydim:#2e2408;
+  --green:#3ecf6e;--gdim:#0d2a18;
+  --red:#e85454;--rdim:#2a0d0d;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'DM Mono',monospace;min-height:100vh;overflow-x:hidden}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--b2);border-radius:3px}
+
+header{background:var(--s1);border-bottom:1px solid var(--border);padding:0 2.5rem;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.35rem;letter-spacing:-.04em}
+.logo span{color:var(--yellow)}
+.nav{display:flex;gap:.4rem;flex-wrap:wrap}
+.npill{background:var(--s2);border:1px solid var(--border);border-radius:20px;padding:.28rem .85rem;font-size:.6rem;color:var(--muted2);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .15s;font-family:'Syne',sans-serif;font-weight:700}
+.npill:hover{background:var(--yellow);color:#0d0d0d;border-color:var(--yellow)}
+
+.hero{text-align:center;padding:3.5rem 2rem 2.5rem;background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(245,200,66,.08),transparent);border-bottom:1px solid var(--border)}
+.eyebrow{display:inline-flex;align-items:center;gap:.5rem;background:var(--ydim);border:1px solid rgba(245,200,66,.2);border-radius:20px;padding:.3rem 1rem;font-size:.6rem;color:var(--yellow);letter-spacing:.15em;text-transform:uppercase;margin-bottom:1.2rem;font-family:'Syne',sans-serif}
+.eyebrow::before{content:'●';font-size:.38rem;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.8rem,5vw,3rem);letter-spacing:-.04em;line-height:1.1;margin-bottom:.9rem;background:linear-gradient(150deg,#f0ece4 40%,#8a8070);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{color:var(--muted2);font-size:.78rem;max-width:560px;margin:0 auto 1.5rem;line-height:1.8}
+.pills-row{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}
+.hpill{display:flex;align-items:center;gap:.35rem;background:var(--s1);border:1px solid var(--border);border-radius:20px;padding:.3rem .9rem;font-size:.62rem;color:var(--muted2)}
+.hpill .g{color:var(--green)}.hpill strong{color:var(--ink)}
+
+main{max-width:1380px;margin:0 auto;padding:2.5rem 2rem}
+
+.dz{border:2px dashed var(--border);border-radius:10px;padding:3rem 2rem;text-align:center;cursor:pointer;transition:all .25s;background:var(--s1);position:relative;overflow:hidden}
+.dz::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(245,200,66,.04),transparent 50%,rgba(245,200,66,.04));opacity:0;transition:opacity .3s;pointer-events:none}
+.dz:hover::after,.dz.over::after{opacity:1}
+.dz:hover,.dz.over{border-color:var(--yellow);border-style:solid}
+.dz.over{transform:scale(1.003)}
+.dz-icon{font-size:2.5rem;display:block;margin-bottom:.8rem;animation:bob 3s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.dz-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.6rem;letter-spacing:-.03em;margin-bottom:.4rem}
+.dz-sub{color:var(--muted2);font-size:.7rem;line-height:1.9}
+.dz-sub em{color:var(--yellow);font-style:normal}
+.dz-chips{margin-top:.9rem;display:flex;gap:.4rem;justify-content:center;flex-wrap:wrap}
+.chip{background:var(--s2);border:1px solid var(--border);border-radius:20px;padding:.22rem .7rem;font-size:.56rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+#fi{display:none}
+.pw{height:3px;background:var(--border);overflow:hidden;display:none;margin-top:2px}
+.pw.on{display:block}
+.pf{height:100%;background:linear-gradient(90deg,var(--yellow),var(--green));width:0%;transition:width .2s}
+
+.dup-banner{display:none;background:var(--ydim);border:1px solid rgba(245,200,66,.25);border-radius:6px;padding:.65rem 1rem;font-size:.62rem;color:var(--yellow);margin-top:.75rem;align-items:center;gap:.6rem}
+.dup-banner.on{display:flex}
+
+.ws{display:grid;grid-template-columns:295px 1fr;gap:1.8rem;margin-top:2rem;align-items:start}
+@media(max-width:860px){.ws{grid-template-columns:1fr}}
+
+/* FIX 8: sidebar sticky only on desktop so mobile layout isn't broken */
+.sidebar{background:var(--s1);border:1px solid var(--border);border-radius:10px;display:none}
+.sidebar.on{display:block}
+@media(min-width:861px){.sidebar.on{position:sticky;top:70px}}
+
+.psec{padding:1.1rem 1.3rem;border-bottom:1px solid var(--border)}
+.psec:last-child{border-bottom:none}
+.plabel{font-family:'Syne',sans-serif;font-weight:700;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.9rem;display:flex;align-items:center;gap:.4rem}
+.plabel em{color:var(--yellow);font-style:normal}
+.cg{margin-bottom:.8rem}.cg:last-child{margin-bottom:0}
+.cg>label{display:block;font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.32rem}
+.cg select,.cg input[type=number],.cg input[type=text]{width:100%;background:var(--s2);border:1px solid var(--border);border-radius:5px;padding:.48rem .7rem;color:var(--ink);font-family:'DM Mono',monospace;font-size:.7rem;appearance:none;transition:border-color .15s}
+.cg select:focus,.cg input:focus{outline:none;border-color:var(--yellow)}
+.cg select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%236a6460' d='M5 7L1 2h8z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .7rem center;padding-right:1.9rem;cursor:pointer}
+.rw{display:flex;align-items:center;gap:.65rem}
+.rw input[type=range]{flex:1;accent-color:var(--yellow);cursor:pointer}
+.rv{font-size:.7rem;color:var(--yellow);min-width:2.5rem;text-align:right;font-weight:500}
+.trow{display:flex;align-items:center;gap:.6rem;padding:.35rem 0;cursor:pointer}
+.trow:hover .tl{color:var(--ink)}
+.tog{position:relative;width:34px;height:18px;flex-shrink:0}
+.tog input{opacity:0;width:0;height:0;position:absolute}
+.ts{position:absolute;inset:0;background:var(--b2);border-radius:20px;cursor:pointer;transition:.2s}
+.ts::before{content:'';position:absolute;width:12px;height:12px;left:3px;top:3px;background:var(--muted);border-radius:50%;transition:.2s}
+.tog input:checked+.ts{background:var(--green)}
+.tog input:checked+.ts::before{transform:translateX(16px);background:#fff}
+.tl{font-size:.62rem;color:var(--muted2);line-height:1.3;transition:color .15s}
+.rename-warn{display:none;font-size:.56rem;color:var(--red);margin-top:.3rem;line-height:1.4;padding:.3rem .5rem;background:var(--rdim);border-radius:3px}
+.rename-warn.on{display:block}
+/* FIX 4: visual feedback for ignored resize values */
+.resize-warn{display:none;font-size:.56rem;color:var(--yellow);margin-top:.25rem;padding:.25rem .5rem;background:var(--ydim);border-radius:3px}
+.resize-warn.on{display:block}
+
+.astack{display:flex;flex-direction:column;gap:.45rem}
+.btn{display:flex;align-items:center;justify-content:center;gap:.45rem;padding:.68rem 1.1rem;font-family:'Syne',sans-serif;font-weight:700;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border:none;border-radius:6px;transition:all .15s;width:100%}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none!important}
+.bp{background:var(--yellow);color:#0d0d0d}.bp:hover:not(:disabled){background:#e8b820;transform:translateY(-1px)}.bp.done{background:var(--green);color:#0d0d0d}
+.bd{background:var(--s3);color:var(--ink);border:1px solid var(--b2)}.bd:hover:not(:disabled){background:var(--b2);transform:translateY(-1px)}
+.bo{background:transparent;color:var(--muted2);border:1px solid var(--border)}.bo:hover:not(:disabled){border-color:var(--muted2);color:var(--ink)}
+.br{background:transparent;color:var(--red);border:1px solid var(--rdim)}.br:hover{background:var(--rdim)}
+
+/* Stats — visible as soon as images load, reset correctly on removeCard */
+.sbar{display:none;grid-template-columns:repeat(4,1fr);background:var(--s1);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:1.4rem}
+.sbar.on{display:grid}
+.st{padding:.9rem 1rem;border-right:1px solid var(--border);text-align:center}
+.st:last-child{border-right:none}
+.stl{font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem}
+.stv{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--ink)}
+.stv.g{color:var(--green)}.stv.y{color:var(--yellow)}
+@media(max-width:580px){.sbar.on{grid-template-columns:repeat(2,1fr)}.st{border-bottom:1px solid var(--border)}}
+
+.ig{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:.9rem}
+
+.card{background:var(--s1);border:1px solid var(--border);border-radius:8px;overflow:hidden;animation:cin .28s ease both;transition:border-color .2s,box-shadow .2s;position:relative}
+.card:hover{border-color:var(--b2);box-shadow:0 4px 24px rgba(0,0,0,.45)}
+.card.converting{border-color:rgba(245,200,66,.35)}
+.card.cvt{border-color:rgba(62,207,110,.3)}
+.card.failed{border-color:rgba(232,84,84,.5)}
+@keyframes cin{from{opacity:0;transform:translateY(9px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.cthumb-wrap{position:relative;width:100%;aspect-ratio:4/3;background:var(--s2);overflow:hidden}
+.cthumb{width:100%;height:100%;object-fit:cover;display:block}
+.cthumb-overlay{position:absolute;inset:0;background:rgba(13,13,13,.75);display:none;align-items:center;justify-content:center;flex-direction:column;gap:.5rem}
+.cthumb-overlay.on{display:flex}
+.spinner{width:22px;height:22px;border:2px solid var(--border);border-top-color:var(--yellow);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.overlay-txt{font-size:.54rem;color:var(--muted2);letter-spacing:.1em;text-transform:uppercase}
+.cbadges{position:absolute;top:.45rem;left:.45rem;right:.45rem;display:flex;justify-content:space-between;pointer-events:none}
+.cbg{font-family:'Syne',sans-serif;font-weight:700;font-size:.5rem;padding:.18rem .45rem;border-radius:3px;letter-spacing:.1em;text-transform:uppercase}
+.cbg-fmt{background:rgba(13,13,13,.82);color:var(--muted2);backdrop-filter:blur(4px)}
+.cbg-done{background:var(--green);color:#0d0d0d;display:none}
+.cbg-done.on{display:block}
+.cbody{padding:.7rem}
+.cname{font-size:.58rem;color:var(--muted2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:.38rem}
+.cmeta{font-size:.57rem;color:var(--muted);margin-bottom:.55rem;min-height:1.1em;display:flex;align-items:center;gap:.28rem;flex-wrap:wrap}
+.cmeta .arr{color:var(--muted)}.cmeta .ns{color:var(--green);font-weight:500}
+.spct{background:var(--gdim);color:var(--green);padding:.1rem .32rem;border-radius:3px;font-size:.5rem}
+.bpct{background:var(--rdim);color:var(--red);padding:.1rem .32rem;border-radius:3px;font-size:.5rem}
+.cacts{display:flex;gap:.3rem}
+.cdl{flex:1;background:var(--s2);border:1px solid var(--border);border-radius:4px;padding:.35rem .45rem;color:var(--ink);font-family:'DM Mono',monospace;font-size:.56rem;cursor:pointer;transition:all .15s;text-align:center}
+.cdl:hover:not(:disabled){background:var(--yellow);color:#0d0d0d;border-color:var(--yellow)}
+.cdl:disabled{opacity:.4;cursor:not-allowed}
+.cdl.saved{background:var(--gdim);color:var(--green);border-color:rgba(62,207,110,.3)}
+.crm{background:transparent;border:1px solid var(--border);border-radius:4px;padding:.35rem .45rem;color:var(--muted);font-size:.62rem;cursor:pointer;transition:all .15s}
+.crm:hover{border-color:var(--red);color:var(--red);background:var(--rdim)}
+
+.section{margin-top:5rem;padding-top:3rem;border-top:1px solid var(--border)}
+.sh{font-family:'Syne',sans-serif;font-weight:800;font-size:1.7rem;letter-spacing:-.03em;margin-bottom:.5rem}
+.ssub{color:var(--muted2);font-size:.72rem;margin-bottom:1.8rem}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.7rem}
+th{background:var(--s1);padding:.7rem .9rem;text-align:left;border:1px solid var(--border);color:var(--muted);font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;font-weight:400}
+th.us{background:var(--ydim);color:var(--yellow)}
+td{padding:.7rem .9rem;border:1px solid var(--border);color:var(--muted2);vertical-align:middle}
+td.us{background:rgba(245,200,66,.04);color:var(--ink);font-weight:500}
+tr:hover td{background:var(--s2)}tr:hover td.us{background:rgba(245,200,66,.07)}
+.y{color:var(--green)}.n{color:var(--red)}.p{color:var(--yellow)}
+.fg{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.9rem}
+.fc{background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:1.3rem;transition:border-color .2s,transform .2s}
+.fc:hover{border-color:var(--b2);transform:translateY(-2px)}
+.fi-icon{font-size:1.4rem;margin-bottom:.65rem;display:block}
+.ft{font-family:'Syne',sans-serif;font-weight:700;font-size:.82rem;margin-bottom:.38rem}
+.fd{font-size:.63rem;color:var(--muted2);line-height:1.65}
+.fb2{display:inline-block;margin-top:.55rem;font-size:.5rem;padding:.18rem .45rem;border-radius:3px;letter-spacing:.1em;text-transform:uppercase}
+.fb2.y{background:var(--ydim);color:var(--yellow)}.fb2.g{background:var(--gdim);color:var(--green)}
+.fi-item{border:1px solid var(--border);border-radius:6px;margin-bottom:.65rem;overflow:hidden}
+.fq{padding:.9rem 1.1rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:'Syne',sans-serif;font-weight:600;font-size:.75rem;transition:background .15s;gap:1rem}
+.fq:hover{background:var(--s2)}.fq.open{background:var(--s2);color:var(--yellow)}
+.ficon{font-size:.75rem;transition:transform .2s;color:var(--muted);flex-shrink:0}
+.fq.open .ficon{transform:rotate(45deg);color:var(--yellow)}
+/* FIX: max-height large enough to never clip FAQ answers */
+.fa{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.fa.open{max-height:800px}
+.fa-in{padding:0 1.1rem .9rem;font-size:.67rem;color:var(--muted2);line-height:1.85}
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(14px);padding:.62rem 1.5rem;border-radius:6px;font-family:'Syne',sans-serif;font-weight:700;font-size:.66rem;letter-spacing:.08em;opacity:0;transition:all .25s;pointer-events:none;z-index:9999;box-shadow:0 8px 28px rgba(0,0,0,.5);max-width:90vw;text-align:center}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.good{background:var(--green);color:#0d0d0d}
+.toast.warn{background:var(--yellow);color:#0d0d0d}
+.toast.info{background:var(--s3);color:var(--ink);border:1px solid var(--b2)}
+.toast.err{background:var(--red);color:#fff}
+
+/* ── AUTH ── */
+.auth-bar{display:flex;align-items:center;gap:.55rem;flex-shrink:0}
+.auth-btn{background:var(--s2);border:1px solid var(--border);border-radius:20px;padding:.28rem .85rem;font-size:.6rem;color:var(--muted2);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .15s;font-family:'Syne',sans-serif;font-weight:700;white-space:nowrap}
+.auth-btn:hover{background:var(--yellow);color:#0d0d0d;border-color:var(--yellow)}
+.so-btn:hover{background:var(--rdim)!important;color:var(--red)!important;border-color:var(--rdim)!important}
+.plan-badge{font-family:'Syne',sans-serif;font-weight:700;font-size:.5rem;padding:.2rem .55rem;border-radius:20px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
+.plan-free{background:var(--s3);color:var(--muted2);border:1px solid var(--border)}
+.plan-pro{background:var(--ydim);color:var(--yellow);border:1px solid rgba(245,200,66,.3)}
+.plan-team{background:var(--gdim);color:var(--green);border:1px solid rgba(62,207,110,.3)}
+.user-chip{display:flex;align-items:center;gap:.45rem;background:var(--s2);border:1px solid var(--border);border-radius:20px;padding:.2rem .65rem .2rem .4rem}
+.user-avatar{width:20px;height:20px;border-radius:50%;object-fit:cover;background:var(--s3);flex-shrink:0}
+.user-email{font-size:.56rem;color:var(--muted2);max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.upgrade-banner{display:none;background:linear-gradient(90deg,rgba(46,36,8,.95),rgba(46,36,8,.5));border:1px solid rgba(245,200,66,.25);border-radius:8px;padding:.8rem 1.2rem;margin-bottom:1.2rem;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.upgrade-banner.on{display:flex}
+.upgrade-banner p{font-size:.64rem;color:var(--muted2);line-height:1.6;margin:0}
+.upgrade-banner p strong{color:var(--yellow)}
+.upgrade-banner button{background:var(--yellow);color:#0d0d0d;border:none;border-radius:5px;padding:.48rem 1.1rem;font-family:'Syne',sans-serif;font-weight:700;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;white-space:nowrap;flex-shrink:0}
+.upgrade-banner button:hover{background:#e8b820}
+@media(max-width:640px){.user-email{display:none}}
+footer{margin-top:5rem;padding:1.8rem 2.5rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:.6rem;color:var(--muted)}
+.flogo{font-family:'Syne',sans-serif;font-weight:800;font-size:.95rem;color:var(--ink)}
+.flogo span{color:var(--yellow)}
+/* ── PRICING ── */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2rem}
+@media(max-width:760px){.pricing-grid{grid-template-columns:1fr}}
+.pc{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:2rem 1.6rem;display:flex;flex-direction:column;position:relative;transition:transform .2s,border-color .2s}
+.pc:hover{transform:translateY(-3px)}
+.pc.featured{border-color:var(--yellow);background:linear-gradient(160deg,rgba(245,200,66,.06) 0%,var(--s1) 60%)}
+.pc-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--yellow);color:#0d0d0d;font-family:'Syne',sans-serif;font-weight:800;font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;padding:.28rem .9rem;border-radius:20px;white-space:nowrap}
+.pc-tier{font-family:'Syne',sans-serif;font-weight:700;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.7rem}
+.pc-price{display:flex;align-items:baseline;gap:.25rem;margin-bottom:.2rem}
+.pc-amt{font-family:'Syne',sans-serif;font-weight:800;font-size:2.8rem;letter-spacing:-.04em;line-height:1}
+.pc-amt.free-col{color:var(--green)}
+.pc-amt.pro-col{color:var(--yellow)}
+.pc-amt.team-col{color:var(--ink)}
+.pc-curr{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;color:var(--muted2)}
+.pc-per{font-size:.62rem;color:var(--muted);margin-bottom:1.1rem}
+.pc-desc{font-size:.65rem;color:var(--muted2);line-height:1.75;margin-bottom:1.4rem;min-height:3.5rem}
+.pc-divider{height:1px;background:var(--border);margin-bottom:1.4rem}
+.pc-feat{list-style:none;display:flex;flex-direction:column;gap:.65rem;margin-bottom:2rem;flex:1}
+.pc-feat li{display:flex;align-items:flex-start;gap:.55rem;font-size:.63rem;color:var(--muted2);line-height:1.5}
+.pc-feat li .ic{flex-shrink:0;width:14px;text-align:center}
+.pc-feat li .ic.y{color:var(--green)}
+.pc-feat li .ic.n{color:var(--border)}
+.pc-feat li.dim{color:var(--muted)}
+.pc-cta{display:block;text-align:center;padding:.78rem 1rem;border-radius:7px;font-family:'Syne',sans-serif;font-weight:700;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:all .15s;border:none;width:100%}
+.cta-free{background:var(--s3);color:var(--ink);border:1px solid var(--b2)}.cta-free:hover{background:var(--b2)}
+.cta-pro{background:var(--yellow);color:#0d0d0d}.cta-pro:hover{background:#e8b820;transform:translateY(-1px);box-shadow:0 6px 24px rgba(245,200,66,.25)}
+.cta-team{background:var(--ink);color:#0d0d0d}.cta-team:hover{background:#fff;transform:translateY(-1px)}
+.pricing-note{text-align:center;font-size:.6rem;color:var(--muted);margin-top:1.5rem;line-height:1.9}
+.pricing-note strong{color:var(--muted2)}
+.ann-toggle{display:flex;align-items:center;justify-content:center;gap:.8rem;margin-bottom:2rem}
+.ann-toggle span{font-size:.65rem;color:var(--muted2)}
+.ann-toggle span.active{color:var(--ink);font-weight:500}
+.ann-badge{background:var(--gdim);color:var(--green);font-size:.52rem;padding:.18rem .5rem;border-radius:20px;letter-spacing:.08em}
+</style>
+<body>
+
+<header>
+  <div class="logo">Convert<span>Fast</span></div>
+  <div class="nav" style="flex:1">
+    <div class="npill" onclick="scrollTo(0,0)">Converter</div>
+    <div class="npill" onclick="document.getElementById('compare').scrollIntoView({behavior:'smooth'})">vs Competitors</div>
+    <div class="npill" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">Features</div>
+    <div class="npill" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Pricing</div>
+    <div class="npill" onclick="document.getElementById('faq').scrollIntoView({behavior:'smooth'})">FAQ</div>
+  </div>
+  <div class="auth-bar" id="authBar">
+    <button class="auth-btn" id="signInBtn" style="display:none" onclick="clerkSignIn()">Sign in</button>
+    <div class="user-chip" id="userChip" style="display:none">
+      <img class="user-avatar" id="userAvatar" src="" alt="">
+      <span class="user-email" id="userEmail"></span>
+    </div>
+    <span class="plan-badge plan-free" id="planBadge" style="display:none"></span>
+    <button class="auth-btn so-btn" id="signOutBtn" style="display:none" onclick="clerkSignOut()">Sign out</button>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="eyebrow">No uploads &nbsp;·&nbsp; No sign-in &nbsp;·&nbsp; 100% Private &nbsp;·&nbsp; Instant</div>
+  <h1>Bulk Image Converter<br><span style="font-size:.65em;opacity:.8">JPG, PNG &amp; WebP — Free, Fast, Private</span></h1>
+  <p class="hero-sub">Convert JPG to WebP, PNG to JPG, or any image format — in bulk, in seconds. Resize, compress, strip EXIF data, rename in batches, and download as ZIP. Everything runs in your browser. <strong>Nothing is ever uploaded.</strong></p>
+  <div class="pills-row">
+    <div class="hpill"><span class="g">✓</span> <strong>Bulk convert</strong> images</div>
+    <div class="hpill"><span class="g">✓</span> <strong>JPG · PNG · WebP · GIF</strong></div>
+    <div class="hpill"><span class="g">✓</span> <strong>6 output formats</strong></div>
+    <div class="hpill"><span class="g">✓</span> <strong>ZIP export</strong></div>
+    <div class="hpill"><span class="g">✓</span> <strong>Strip EXIF / GPS</strong></div>
+    <div class="hpill"><span class="g">✓</span> <strong>100% private</strong></div>
+  </div>
+</div>
+
+<main>
+  <div class="upgrade-banner" id="upgradeBanner">
+    <p><strong>Free limit reached (10 images).</strong> Upgrade to Pro for unlimited images, no file size cap, and REST API access.</p>
+    <button onclick="startCheckout('pro')">Upgrade to Pro →</button>
+  </div>
+  <div class="dz" id="dropZone">
+    <input type="file" id="fi" multiple accept="image/*">
+    <span class="dz-icon">🗂</span>
+    <div class="dz-title">Drop images to convert</div>
+    <div class="dz-sub">or click to browse &nbsp;·&nbsp; <em>JPG &nbsp;PNG &nbsp;WebP &nbsp;GIF &nbsp;BMP &nbsp;AVIF &nbsp;TIFF</em><br>Convert <em>JPG to WebP</em>, <em>PNG to JPG</em> and more &nbsp;·&nbsp; Everything stays on your device</div>
+    <div class="dz-chips">
+      <span class="chip">⌘V paste screenshot</span>
+      <span class="chip">drag &amp; drop</span>
+      <span class="chip">batch rename</span>
+      <span class="chip">zip all</span>
+      <span class="chip">strip GPS</span>
+    </div>
+  </div>
+  <div class="pw" id="pw"><div class="pf" id="pf"></div></div>
+  <div class="dup-banner" id="dupBanner">⚠ <span id="dupMsg"></span></div>
+
+  <div class="ws">
+    <div class="sidebar" id="sidebar">
+
+      <div class="psec">
+        <div class="plabel"><em>⇄</em> Format &amp; Quality</div>
+        <div class="cg">
+          <label>Output format</label>
+          <select id="fmt">
+            <option value="original">Keep original format</option>
+            <option value="image/jpeg">JPEG (.jpg) — best for photos</option>
+            <option value="image/png">PNG (.png) — lossless</option>
+            <option value="image/webp">WebP (.webp) — smallest size</option>
+            <option value="image/gif">GIF (.gif)</option>
+            <option value="image/bmp">BMP (.bmp) — uncompressed</option>
+          </select>
+        </div>
+        <div class="cg">
+          <label>Quality <small style="color:var(--muted);font-size:.5rem">JPEG &amp; WebP only</small></label>
+          <div class="rw"><input type="range" id="qr" min="10" max="100" value="88"><span class="rv" id="qv">88%</span></div>
+        </div>
+      </div>
+
+      <div class="psec">
+        <div class="plabel"><em>↔</em> Resize</div>
+        <!-- FIX 4: warn when value is invalid -->
+        <div class="cg">
+          <label>Max width px <small style="color:var(--muted)">0 = no limit</small></label>
+          <input type="number" id="mw" value="0" min="0" max="9999" placeholder="e.g. 1920">
+          <div class="resize-warn" id="mwWarn">⚠ Negative values are ignored — enter 0 for no limit.</div>
+        </div>
+        <div class="cg">
+          <label>Max height px <small style="color:var(--muted)">0 = no limit</small></label>
+          <input type="number" id="mh" value="0" min="0" max="9999" placeholder="e.g. 1080">
+          <div class="resize-warn" id="mhWarn">⚠ Negative values are ignored — enter 0 for no limit.</div>
+        </div>
+        <label class="trow"><span class="tog"><input type="checkbox" id="keepAR" checked><span class="ts"></span></span><span class="tl">Maintain aspect ratio</span></label>
+      </div>
+
+      <div class="psec">
+        <div class="plabel"><em>✎</em> Rename &amp; Options</div>
+        <div class="cg">
+          <label>Rename pattern <small style="color:var(--muted)">{n}=number &nbsp;{name}=original</small></label>
+          <input type="text" id="rn" placeholder="e.g. photo-{n}">
+          <!-- FIX 7 note: {n} ensures sequential naming without gaps after removals -->
+          <div class="rename-warn" id="rnWarn">⚠ No {n} in pattern — all files will share the same name and overwrite in ZIP.</div>
+        </div>
+        <label class="trow"><span class="tog"><input type="checkbox" id="stripExif" checked><span class="ts"></span></span><span class="tl">Strip EXIF metadata (GPS, timestamps, camera)</span></label>
+        <label class="trow"><span class="tog"><input type="checkbox" id="whiteBg" checked><span class="ts"></span></span><span class="tl">White background for JPEG (removes transparency)</span></label>
+      </div>
+
+      <div class="psec">
+        <div class="plabel"><em>⚡</em> Convert</div>
+        <div class="astack">
+          <button class="btn bp" id="cvtBtn">⚡ Convert all images</button>
+          <button class="btn br" id="clearBtn">✕ Clear all</button>
+        </div>
+      </div>
+
+      <!-- Download section — hidden until conversion done -->
+      <div class="psec" id="dlSection" style="display:none">
+        <div class="plabel"><em>⬇</em> Download</div>
+        <div class="astack">
+          <button class="btn bd" id="zipBtn">📦 Download all as ZIP</button>
+          <button class="btn bo" id="copyUrlBtn">📋 Copy data URLs</button>
+        </div>
+        <div style="margin-top:.7rem;font-size:.56rem;color:var(--muted);line-height:1.7;padding:0 .1rem">
+          Individual file downloads are on each image card below. ↓
+        </div>
+      </div>
+
+    </div>
+
+    <div>
+      <!-- FIX 1: stats bar visible as soon as images load; reset correctly on removeCard -->
+      <div class="sbar" id="sbar">
+        <div class="st"><div class="stl">Images loaded</div><div class="stv y" id="stN">0</div></div>
+        <div class="st"><div class="stl">Original size</div><div class="stv" id="stO">—</div></div>
+        <div class="st"><div class="stl">After conversion</div><div class="stv g" id="stC">—</div></div>
+        <div class="st"><div class="stl">Space saved</div><div class="stv g" id="stS">—</div></div>
+      </div>
+      <div class="ig" id="ig"></div>
+    </div>
+  </div>
+
+  <!-- COMPARISON TABLE -->
+  <div class="section" id="compare" aria-label="Image converter comparison">
+    <div class="sh">How We Compare</div>
+    <p class="ssub">ConvertFast vs ImageToURL, Imgur, Squoosh, and TinyPNG — every metric that matters</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr>
+        <th>Feature</th><th class="us">✦ ConvertFast</th><th>ImageToURL</th><th>Imgur</th><th>Squoosh</th><th>TinyPNG</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Bulk upload</td><td class="us"><span class="y">✓</span> 300 at once</td><td><span class="n">✗</span> 1 at a time</td><td><span class="p">~</span> limited</td><td><span class="n">✗</span> 1 at a time</td><td><span class="p">~</span> 20 files</td></tr>
+        <tr><td>File size limit</td><td class="us"><span class="y">✓</span> No limit</td><td><span class="n">✗</span> 2MB</td><td><span class="p">~</span> 20MB</td><td><span class="y">✓</span> No limit</td><td><span class="n">✗</span> 5MB</td></tr>
+        <tr><td>Format conversion</td><td class="us"><span class="y">✓</span> 6 formats</td><td><span class="n">✗</span> None</td><td><span class="n">✗</span> None</td><td><span class="p">~</span> Limited</td><td><span class="n">✗</span> PNG/WebP only</td></tr>
+        <tr><td>Bulk resize</td><td class="us"><span class="y">✓</span> Yes</td><td><span class="n">✗</span> No</td><td><span class="n">✗</span> No</td><td><span class="n">✗</span> No</td><td><span class="n">✗</span> No</td></tr>
+        <tr><td>ZIP export</td><td class="us"><span class="y">✓</span> Yes</td><td><span class="n">✗</span> No</td><td><span class="n">✗</span> No</td><td><span class="n">✗</span> No</td><td><span class="n">✗</span> No</td></tr>
+        <tr><td>Strip EXIF / GPS</td><td class="us"><span class="y">✓</span> Automatic</td><td><span class="p">~</span> Separate tool</td><td><span class="n">✗</span> No</td><td><span class="n">✗</span> No</td><td><span class="y">✓</span> Yes</td></tr>
+        <tr><td>Bulk rename</td><td class="us"><span class="y">✓</span> Pattern-based</td><td><span class="n">✗</span> No</td><td><span class="n">✗</span> No</td><td><span class="n">✗</span> No</td><td><span class="n">✗</span> No</td></tr>
+        <tr><td>Images uploaded to server</td><td class="us"><span class="y">✓</span> Never</td><td><span class="n">✗</span> Always</td><td><span class="n">✗</span> Always</td><td><span class="y">✓</span> Never</td><td><span class="n">✗</span> Always</td></tr>
+        <tr><td>Sign-in required</td><td class="us"><span class="y">✓</span> Never</td><td><span class="p">~</span> For history</td><td><span class="n">✗</span> For most features</td><td><span class="y">✓</span> Never</td><td><span class="p">~</span> 20 files/mo free</td></tr>
+        <tr><td>Quality slider</td><td class="us"><span class="y">✓</span> Full control</td><td><span class="n">✗</span> No</td><td><span class="n">✗</span> No</td><td><span class="y">✓</span> Yes</td><td><span class="n">✗</span> Auto only</td></tr>
+        <tr><td>Per-image size savings</td><td class="us"><span class="y">✓</span> Per image + total</td><td><span class="n">✗</span> No</td><td><span class="n">✗</span> No</td><td><span class="y">✓</span> Yes</td><td><span class="p">~</span> Total only</td></tr>
+        <tr><td>Clipboard paste</td><td class="us"><span class="y">✓</span> Yes</td><td><span class="y">✓</span> Yes</td><td><span class="n">✗</span> No</td><td><span class="n">✗</span> No</td><td><span class="n">✗</span> No</td></tr>
+        <tr><td>Ads / tracking</td><td class="us"><span class="y">✓</span> None ever</td><td><span class="n">✗</span> Ads</td><td><span class="n">✗</span> Ads</td><td><span class="y">✓</span> None</td><td><span class="p">~</span> Minimal</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="section" id="features">
+    <div class="sh">Built for Power Users</div>
+    <p class="ssub">Every feature you actually need. None you don't. All free, forever.</p>
+    <div class="fg">
+      <div class="fc"><span class="fi-icon">⚡</span><div class="ft">300 Images at Once</div><div class="fd">Drag a whole folder in. Convert, resize, and download in seconds. ImageToURL does 1 at a time. We do 300 simultaneously.</div><span class="fb2 y">vs 1 image on ImageToURL</span></div>
+      <div class="fc"><span class="fi-icon">🔒</span><div class="ft">Zero Uploads, 100% Private</div><div class="fd">Your images never leave your device. All processing happens in your browser using the Canvas API. No server, no logs, no tracking, ever.</div><span class="fb2 g">vs always-uploaded on competitors</span></div>
+      <div class="fc"><span class="fi-icon">📏</span><div class="ft">No File Size Limit</div><div class="fd">Convert 40MB RAW exports, 25MB PNGs, anything. ImageToURL caps you at 2MB. TinyPNG at 5MB. We have no cap because nothing is uploaded.</div><span class="fb2 y">vs 2MB on ImageToURL</span></div>
+      <div class="fc"><span class="fi-icon">⇄</span><div class="ft">6-Format Conversion</div><div class="fd">Convert to JPEG, PNG, WebP, GIF, or BMP. Switch your whole batch to WebP for max compression or JPEG for universal compatibility.</div><span class="fb2 g">competitors offer 0–2 formats</span></div>
+      <div class="fc"><span class="fi-icon">📦</span><div class="ft">One-Click ZIP Export</div><div class="fd">Convert 300 images and download them all in a single ZIP. No clicking one by one. Compressed, correctly named, ready to go.</div><span class="fb2 y">unavailable on all competitors</span></div>
+      <div class="fc"><span class="fi-icon">🗺</span><div class="ft">Strip EXIF &amp; GPS Metadata</div><div class="fd">Every phone photo has hidden GPS coordinates, timestamps, and device info. Stripped automatically before download — privacy by default.</div><span class="fb2 g">privacy by default</span></div>
+      <div class="fc"><span class="fi-icon">↔</span><div class="ft">Bulk Resize with Aspect Lock</div><div class="fd">Set a max width and/or height and resize your entire batch. Aspect ratio lock prevents distortion. No other free tool does this in bulk.</div><span class="fb2 y">unique feature</span></div>
+      <div class="fc"><span class="fi-icon">✎</span><div class="ft">Batch Rename Patterns</div><div class="fd">Use {n} for sequential numbers and {name} for the original filename. Turn IMG_4821.jpg into vacation-001.jpg across 300 files instantly.</div><span class="fb2 g">e.g. project-{n}.webp</span></div>
+      <div class="fc"><span class="fi-icon">📊</span><div class="ft">Per-Image Size Stats</div><div class="fd">See exactly how much space you saved on each image and your whole batch total. Full transparency — know what you're getting.</div><span class="fb2 y">full transparency</span></div>
+    </div>
+  </div>
+
+  <!-- PRICING -->
+  <div class="section" id="pricing">
+    <div class="sh">Simple, Transparent Pricing</div>
+    <p class="ssub">Start free. No credit card. Upgrade when you need more power.</p>
+
+    <div class="ann-toggle">
+      <span id="lblMonthly" class="active">Monthly</span>
+      <label class="tog" style="width:42px;height:22px">
+        <input type="checkbox" id="annToggle">
+        <span class="ts"></span>
+      </label>
+      <span id="lblAnnual">Annual <span class="ann-badge">Save 25%</span></span>
+    </div>
+
+    <div class="pricing-grid">
+
+      <!-- FREE -->
+      <div class="pc">
+        <div class="pc-tier">Free</div>
+        <div class="pc-price"><span class="pc-amt free-col">$0</span></div>
+        <div class="pc-per">forever &mdash; no card required</div>
+        <div class="pc-desc">Try it out. Good for occasional, one-off conversions.</div>
+        <div class="pc-divider"></div>
+        <ul class="pc-feat">
+          <li><span class="ic y">✓</span> 10 images per session</li>
+          <li><span class="ic y">✓</span> All 6 output formats</li>
+          <li><span class="ic y">✓</span> Basic resize</li>
+          <li class="dim"><span class="ic n">—</span> Max 2MB per file</li>
+          <li class="dim"><span class="ic n">—</span> Watermark on downloads</li>
+          <li class="dim"><span class="ic n">—</span> No ZIP export</li>
+          <li class="dim"><span class="ic n">—</span> No batch rename</li>
+          <li class="dim"><span class="ic n">—</span> No EXIF strip</li>
+          <li class="dim"><span class="ic n">—</span> No API access</li>
+        </ul>
+        <button class="pc-cta cta-free" onclick="scrollTo(0,0)">Try free &rarr;</button>
+      </div>
+
+      <!-- PRO — FEATURED -->
+      <div class="pc featured">
+        <div class="pc-badge">&#10022; Most Popular</div>
+        <div class="pc-tier">Pro</div>
+        <div class="pc-price">
+          <span class="pc-curr">$</span>
+          <span class="pc-amt pro-col" id="proAmt">6</span>
+        </div>
+        <div class="pc-per" id="proPer">per month &mdash; billed monthly</div>
+        <div class="pc-desc">For anyone who converts images regularly and needs clean, fast, watermark-free results.</div>
+        <div class="pc-divider"></div>
+        <ul class="pc-feat">
+          <li><span class="ic y">✓</span> <strong>Unlimited</strong> images</li>
+          <li><span class="ic y">✓</span> <strong>No file size limit</strong></li>
+          <li><span class="ic y">✓</span> All 6 output formats</li>
+          <li><span class="ic y">✓</span> <strong>No watermark</strong></li>
+          <li><span class="ic y">✓</span> ZIP export</li>
+          <li><span class="ic y">✓</span> Batch rename patterns</li>
+          <li><span class="ic y">✓</span> Strip EXIF / GPS data</li>
+          <li><span class="ic y">✓</span> Save &amp; reuse presets</li>
+          <li><span class="ic y">✓</span> REST API (10k calls/mo)</li>
+        </ul>
+        <button class="pc-cta cta-pro" onclick="startCheckout('pro')">Get Pro &rarr;</button>
+      </div>
+
+      <!-- TEAM -->
+      <div class="pc">
+        <div class="pc-badge" style="background:var(--green);color:#0d0d0d">Early Access</div>
+        <div class="pc-tier">Team</div>
+        <div class="pc-price">
+          <span class="pc-curr">$</span>
+          <span class="pc-amt team-col" id="teamAmt">19</span>
+        </div>
+        <div class="pc-per" id="teamPer">per seat / month &mdash; founding price, locked forever</div>
+        <div class="pc-desc">Built for agencies. Sign up now at the founding price and get every feature the moment it ships.</div>
+        <div class="pc-divider"></div>
+        <ul class="pc-feat">
+          <li><span class="ic y">✓</span> Everything in Pro &mdash; right now</li>
+          <li><span class="ic y">✓</span> 5 seats &nbsp;<span style="font-size:.52rem;color:var(--green);background:var(--gdim);padding:.1rem .35rem;border-radius:3px">coming soon</span></li>
+          <li><span class="ic y">✓</span> Shared team presets &nbsp;<span style="font-size:.52rem;color:var(--green);background:var(--gdim);padding:.1rem .35rem;border-radius:3px">coming soon</span></li>
+          <li><span class="ic y">✓</span> REST API 100k calls/mo &nbsp;<span style="font-size:.52rem;color:var(--green);background:var(--gdim);padding:.1rem .35rem;border-radius:3px">coming soon</span></li>
+          <li><span class="ic y">✓</span> Custom subdomain &nbsp;<span style="font-size:.52rem;color:var(--green);background:var(--gdim);padding:.1rem .35rem;border-radius:3px">coming soon</span></li>
+          <li><span class="ic y">✓</span> White-label branding &nbsp;<span style="font-size:.52rem;color:var(--green);background:var(--gdim);padding:.1rem .35rem;border-radius:3px">coming soon</span></li>
+          <li><span class="ic y">✓</span> SSO / SAML login &nbsp;<span style="font-size:.52rem;color:var(--green);background:var(--gdim);padding:.1rem .35rem;border-radius:3px">coming soon</span></li>
+          <li><span class="ic y">✓</span> Priority Slack support &nbsp;<span style="font-size:.52rem;color:var(--green);background:var(--gdim);padding:.1rem .35rem;border-radius:3px">coming soon</span></li>
+          <li><span class="ic y">✓</span> <strong>Price locked forever</strong> &mdash; never increases</li>
+        </ul>
+        <button class="pc-cta cta-team" onclick="startCheckout('team')">Lock in founding price &rarr;</button>
+      </div>
+
+    </div>
+
+    <div class="pricing-note">
+      <strong>All paid plans include a 14-day free trial.</strong> Cancel any time &mdash; no questions asked.<br>
+      Need a custom volume deal or on-premise deployment? <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="177f727b7b78575478796172656351766463397e78">[email&#160;protected]</a></strong>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="section" id="faq">
+    <div class="sh">Frequently Asked Questions</div>
+    <div id="faqWrap"></div>
+  </div>
+</main>
+
+<footer>
+  <div><div class="flogo">Convert<span>Fast</span></div><div style="margin-top:.25rem;font-size:.58rem;color:var(--muted)">Free bulk image converter · JPG to WebP · PNG to JPG · No uploads · No sign-in · 100% private</div></div>
+  <div style="text-align:right;font-size:.6rem;color:var(--muted)">© 2025 ConvertFast · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="eb838e878784ab8884859d8e999f8d8a989fc58284">[email&#160;protected]</a></div>
+</footer>
+<div class="toast" id="toast"></div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+(function(){
+'use strict';
+
+/* ═══════════════════════════════════════
+   STATE
+═══════════════════════════════════════ */
+var MAX       = 10;
+var images    = [];   // { id, name, type, size, dataUrl }
+var idc       = 0;
+var converted = {};   // id -> { blob, filename, newSize, dataUrl }
+                      // FIX 9: converted entries now include a lazily-cached dataUrl
+var converting = false;
+var loading    = false;
+// FIX 8: track the session ID of the current conversion run
+// so stale promises from a cleared session don't write results back
+var sessionId  = 0;
+
+/* ═══════════════════════════════════════
+   OBJECT URL MANAGEMENT
+   FIX 2: Per-image download URLs are stored and reused (not recreated on
+   every click). One URL per converted image, revoked on next convert run
+   or on clearAll. ZIP URLs get a 60s delayed revoke.
+═══════════════════════════════════════ */
+var imgObjUrls = {}; // id -> object URL, so repeated dlSingle clicks reuse same URL
+
+function getImgUrl(id) {
+  if (!imgObjUrls[id]) {
+    var res = converted[id];
+    if (!res || !res.blob) return null;
+    imgObjUrls[id] = URL.createObjectURL(res.blob);
+  }
+  return imgObjUrls[id];
+}
+
+function revokeAllImgUrls() {
+  Object.keys(imgObjUrls).forEach(function(id) {
+    try { URL.revokeObjectURL(imgObjUrls[id]); } catch(e) {}
+  });
+  imgObjUrls = {};
+}
+
+function trackZipUrl(u) {
+  // Revoke after 60s — enough time for any browser download to complete
+  setTimeout(function(){ try { URL.revokeObjectURL(u); } catch(e) {} }, 60000);
+  return u;
+}
+
+/* ═══════════════════════════════════════
+   HELPERS
+═══════════════════════════════════════ */
+function g(id) { return document.getElementById(id); }
+function fmt(b) {
+  if (!b) return '0 B';
+  if (b < 1024) return b + ' B';
+  if (b < 1048576) return (b / 1024).toFixed(1) + ' KB';
+  return (b / 1048576).toFixed(2) + ' MB';
+}
+var _tt;
+function toast(msg, type) {
+  var t = g('toast');
+  t.textContent = msg;
+  t.className = 'toast on ' + (type || 'info');
+  clearTimeout(_tt);
+  _tt = setTimeout(function() { t.classList.remove('on'); }, 3200);
+}
+function trigger(url, name) {
+  var a = document.createElement('a');
+  a.href = url; a.download = name;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
+
+/* ═══════════════════════════════════════
+   DROP ZONE
+═══════════════════════════════════════ */
+var dz = g('dropZone'), fi = g('fi');
+dz.addEventListener('click',    function(e) { if (e.target !== fi) fi.click(); });
+dz.addEventListener('dragover', function(e) { e.preventDefault(); dz.classList.add('over'); });
+dz.addEventListener('dragleave',function(e) { if (!dz.contains(e.relatedTarget)) dz.classList.remove('over'); });
+dz.addEventListener('drop',     function(e) { e.preventDefault(); dz.classList.remove('over'); load(Array.from(e.dataTransfer.files)); });
+fi.addEventListener('change',   function()  { load(Array.from(fi.files)); fi.value = ''; });
+
+// Clipboard paste — skip when a text input is focused
+document.addEventListener('paste', function(e) {
+  var tag = (document.activeElement || {}).tagName || '';
+  if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+  var items = Array.from((e.clipboardData || e.originalEvent.clipboardData).items);
+  var files = items
+    .filter(function(i) { return i.kind === 'file' && i.type.startsWith('image/'); })
+    .map(function(i)    { return i.getAsFile(); });
+  if (files.length) { load(files); toast('Pasted ' + files.length + ' image(s)', 'good'); }
+});
+
+/* ═══════════════════════════════════════
+   LOAD FILES
+═══════════════════════════════════════ */
+var _dupTimer;
+function load(files) {
+  var imgFiles = files.filter(function(f) { return f.type.startsWith('image/'); });
+  var effectiveMax = (window.__imgMax != null) ? window.__imgMax : MAX;
+  var maxFileMB = (_session && (currentPlan === 'pro' || currentPlan === 'team')) ? Infinity : 2;
+  var effectiveMax = (window.__imgMax != null) ? window.__imgMax : MAX;
+  var slots    = effectiveMax - images.length;
+  if (slots <= 0) {
+    toast('Free limit: 10 images. Upgrade to Pro for unlimited.', 'warn');
+    if (typeof currentPlan !== 'undefined' && currentPlan === 'free') {
+      var ub = document.getElementById('upgradeBanner'); if (ub) ub.classList.add('on');
+    }
+    return;
+  }
+  if (!imgFiles.length) { toast('No image files found', 'warn'); return; }
+
+  // Duplicate detection by filename
+  var existing = {};
+  images.forEach(function(e) { existing[e.name] = true; });
+  var dupes    = imgFiles.filter(function(f) { return  existing[f.name]; });
+  imgFiles     = imgFiles.filter(function(f) { return !existing[f.name]; });
+
+  if (dupes.length) {
+    g('dupMsg').textContent = dupes.length + ' duplicate' + (dupes.length > 1 ? 's' : '') +
+      ' skipped: ' + dupes.map(function(d) { return d.name; }).join(', ');
+    g('dupBanner').classList.add('on');
+    clearTimeout(_dupTimer);
+    _dupTimer = setTimeout(function() { g('dupBanner').classList.remove('on'); }, 5000);
+  }
+
+  var proc = imgFiles.slice(0, slots);
+  if (imgFiles.length > slots) toast('Only ' + slots + ' slots left', 'warn');
+  if (!proc.length) return;
+
+  loading = true;
+  var pw = g('pw'), pf = g('pf');
+  pw.classList.add('on'); pf.style.width = '0%';
+  var done = 0;
+
+  proc.forEach(function(file, idx) {
+    var r = new FileReader();
+    r.onload = function(ev) {
+      idc++;
+      var entry = { id: idc, name: file.name, type: file.type, size: file.size, dataUrl: ev.target.result };
+      images.push(entry);
+      addCard(entry, idx);
+      done++;
+      pf.style.width = (done / proc.length * 100) + '%';
+      updateUI();
+      if (done === proc.length) {
+        loading = false;
+        setTimeout(function() { pw.classList.remove('on'); }, 500);
+        toast('Loaded ' + proc.length + ' image' + (proc.length > 1 ? 's' : ''), 'good');
+      }
+    };
+    r.onerror = function() {
+      done++;
+      toast('Failed to read: ' + file.name, 'err');
+      if (done === proc.length) {
+        loading = false;
+        setTimeout(function() { pw.classList.remove('on'); }, 500);
+      }
+    };
+    r.readAsDataURL(file);
+  });
+}
+
+/* ═══════════════════════════════════════
+   ADD CARD
+═══════════════════════════════════════ */
+function addCard(e, di) {
+  var card = document.createElement('div');
+  card.className = 'card'; card.id = 'card-' + e.id;
+  card.style.animationDelay = (di * 0.03) + 's';
+
+  var tw = document.createElement('div'); tw.className = 'cthumb-wrap';
+  var th = document.createElement('img'); th.className = 'cthumb'; th.src = e.dataUrl; th.alt = e.name;
+  var ov = document.createElement('div'); ov.className = 'cthumb-overlay'; ov.id = 'ov-' + e.id;
+  ov.innerHTML = '<div class="spinner"></div><div class="overlay-txt">Converting…</div>';
+  var bw = document.createElement('div'); bw.className = 'cbadges';
+  var bf = document.createElement('div'); bf.className = 'cbg cbg-fmt'; bf.id = 'bf-' + e.id;
+  bf.textContent = (e.name.split('.').pop() || 'IMG').toUpperCase().slice(0, 6);
+  var bd = document.createElement('div'); bd.className = 'cbg cbg-done'; bd.id = 'bd-' + e.id;
+  bd.textContent = '✓ done';
+  bw.appendChild(bd); bw.appendChild(bf);
+  tw.appendChild(th); tw.appendChild(ov); tw.appendChild(bw);
+
+  var body = document.createElement('div'); body.className = 'cbody';
+  var nm   = document.createElement('div'); nm.className = 'cname'; nm.title = e.name; nm.textContent = e.name;
+  var mt   = document.createElement('div'); mt.className = 'cmeta'; mt.id = 'mt-' + e.id; mt.textContent = fmt(e.size);
+  var ac   = document.createElement('div'); ac.className = 'cacts';
+  var dl   = document.createElement('button'); dl.className = 'cdl'; dl.id = 'dl-' + e.id; dl.textContent = '⬇ Download';
+  var rm   = document.createElement('button'); rm.className = 'crm'; rm.textContent = '✕'; rm.title = 'Remove';
+
+  (function(ent) {
+    dl.addEventListener('click', function() { dlSingle(ent.id); });
+    rm.addEventListener('click', function() { removeCard(ent.id); });
+  })(e);
+
+  ac.appendChild(dl); ac.appendChild(rm);
+  body.appendChild(nm); body.appendChild(mt); body.appendChild(ac);
+  card.appendChild(tw); card.appendChild(body);
+  g('ig').appendChild(card);
+}
+
+/* ═══════════════════════════════════════
+   SETTINGS & VALIDATION
+═══════════════════════════════════════ */
+function getSettings() {
+  // FIX 4: clamp negative resize values to 0 and warn the user
+  var rawMw = parseInt(g('mw').value) || 0;
+  var rawMh = parseInt(g('mh').value) || 0;
+  var mw = Math.max(0, rawMw);
+  var mh = Math.max(0, rawMh);
+  g('mwWarn').classList.toggle('on', rawMw < 0);
+  g('mhWarn').classList.toggle('on', rawMh < 0);
+  return {
+    fmt:     g('fmt').value,
+    quality: parseInt(g('qr').value) / 100,
+    mw:      mw,
+    mh:      mh,
+    rename:  g('rn').value.trim(),
+    keepAR:  g('keepAR').checked,
+    whiteBg: g('whiteBg').checked
+  };
+}
+
+// Rename validation — fire on input, change, and right-click paste
+function checkRename() {
+  var val = g('rn').value.trim();
+  g('rnWarn').classList.toggle('on', val !== '' && val.indexOf('{n}') === -1);
+}
+g('rn').addEventListener('input',  checkRename);
+g('rn').addEventListener('change', checkRename);
+g('rn').addEventListener('paste',  function() { setTimeout(checkRename, 0); });
+g('qr').addEventListener('input',  function() { g('qv').textContent = g('qr').value + '%'; });
+g('mw').addEventListener('input',  function() { g('mwWarn').classList.toggle('on', parseInt(g('mw').value) < 0); });
+g('mh').addEventListener('input',  function() { g('mhWarn').classList.toggle('on', parseInt(g('mh').value) < 0); });
+
+// Canvas toBlob only reliably supports these MIME types
+var SUPPORTED = { 'image/jpeg': true, 'image/png': true, 'image/webp': true, 'image/gif': true, 'image/bmp': true };
+function safeMime(orig)   { return SUPPORTED[orig] ? orig : 'image/png'; }
+function outMime(s, orig) { return s.fmt === 'original' ? safeMime(orig) : s.fmt; }
+function mime2ext(m)      { return { 'image/jpeg':'jpg','image/png':'png','image/webp':'webp','image/gif':'gif','image/bmp':'bmp' }[m] || 'png'; }
+
+// FIX 7: idx is passed as position within the current images array snapshot
+// taken at conversion time, so numbering is always contiguous (001,002,003…)
+// even if images were removed before converting.
+function outFilename(entry, idx, s) {
+  var m    = outMime(s, entry.type);
+  var ext  = mime2ext(m);
+  var base = entry.name.replace(/\.[^.]+$/, '') || 'image';
+  if (s.rename) {
+    var n       = String(idx + 1).padStart(3, '0');
+    var result  = s.rename.replace(/\{n\}/g, n).replace(/\{name\}/g, base).trim();
+    if (!result) result = base + '-' + n; // FIX: empty pattern never produces '.jpg'
+    return result + '.' + ext;
+  }
+  return base + '.' + ext;
+}
+
+/* ═══════════════════════════════════════
+   CONVERT ONE
+═══════════════════════════════════════ */
+function cvtOne(entry, s, idx) {
+  return new Promise(function(resolve, reject) {
+    var im = new Image();
+    im.onload = function() {
+      try {
+        var w = im.naturalWidth, h = im.naturalHeight;
+
+        // FIX 3: reject images that decode with 0 dimensions (SVGs without viewBox, corrupt files)
+        if (!w || !h) {
+          reject(new Error(entry.name + ' has zero dimensions — may be an SVG or corrupt file'));
+          return;
+        }
+
+        if (s.mw > 0 || s.mh > 0) {
+          var mw = s.mw || Infinity, mh = s.mh || Infinity;
+          if (s.keepAR) {
+            var ratio = Math.min(mw / w, mh / h);
+            if (ratio < 1) { w = Math.round(w * ratio); h = Math.round(h * ratio); }
+          } else {
+            if (s.mw > 0) w = Math.min(w, s.mw);
+            if (s.mh > 0) h = Math.min(h, s.mh);
+          }
+        }
+
+        var canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        var ctx = canvas.getContext('2d');
+        var m = outMime(s, entry.type);
+        if (s.whiteBg && (m === 'image/jpeg' || m === 'image/bmp')) {
+          ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, w, h);
+        }
+        ctx.drawImage(im, 0, 0, w, h);
+        var q = (m === 'image/jpeg' || m === 'image/webp') ? s.quality : undefined;
+        canvas.toBlob(function(blob) {
+          if (!blob) { reject(new Error('Conversion failed for: ' + entry.name)); return; }
+          resolve({ blob: blob, filename: outFilename(entry, idx, s), newSize: blob.size });
+        }, m, q);
+      } catch(err) { reject(err); }
+    };
+    im.onerror = function() { reject(new Error('Could not decode: ' + entry.name)); };
+    im.src = entry.dataUrl;
+  });
+}
+
+/* ═══════════════════════════════════════
+   CONVERT ALL
+═══════════════════════════════════════ */
+g('cvtBtn').onclick = function() {
+  if (!images.length) return;
+  if (converting) { toast('Already converting…', 'warn'); return; }
+  if (loading)    { toast('Still loading files, please wait…', 'warn'); return; }
+
+  var s   = getSettings();
+  var btn = g('cvtBtn');
+  btn.textContent = '⏳ Converting…'; btn.disabled = true;
+  converting = true;
+
+  // FIX 8: increment session ID so any in-flight promises from a
+  // previous (cleared) conversion run can detect they're stale and bail out
+  var mySession = ++sessionId;
+
+  revokeAllImgUrls(); // free previous object URLs
+  converted = {};
+
+  // FIX 7: snapshot images array NOW so idx is always contiguous 0,1,2,3…
+  // even if user removed some images before hitting Convert
+  var snapshot = images.slice();
+  var total    = snapshot.length;
+  var successes = 0, failures = 0, removed = 0;
+  var totalOrig = 0, totalNew = 0;
+  snapshot.forEach(function(e) { totalOrig += e.size; });
+
+  // checkAllDone defined at convertAll scope — shared by all forEach iterations
+  function checkAllDone() {
+    if (successes + failures + removed < total) return;
+
+    // FIX 8: if session was cleared mid-convert, don't update UI
+    if (mySession !== sessionId) return;
+
+    converting = false;
+    btn.textContent = '✓ Done! (' + successes + '/' + (total - removed) + ')';
+    btn.classList.add('done'); btn.disabled = false;
+    setTimeout(function() { btn.textContent = '⚡ Convert all images'; btn.classList.remove('done'); }, 4000);
+
+    if (successes > 0) {
+      var zipBtn = g('zipBtn');
+      zipBtn.disabled = false;
+      var dlSec = g('dlSection');
+      if (dlSec) dlSec.style.display = 'block';
+      var sv  = totalOrig - totalNew;
+      var pct = totalOrig > 0 ? Math.round(sv / totalOrig * 100) : 0;
+      g('stO').textContent = fmt(totalOrig);
+      g('stC').textContent = fmt(totalNew);
+      g('stS').textContent = sv > 0 ? fmt(sv) + ' (' + pct + '%)' : sv < 0 ? '+' + fmt(-sv) : '—';
+    }
+    var msg = '✓ ' + successes + ' converted';
+    if (failures > 0) msg += ', ' + failures + ' failed';
+    if (removed > 0)  msg += ', ' + removed + ' removed';
+    toast(msg, successes > 0 ? 'good' : 'err');
+  }
+
+  snapshot.forEach(function(entry, idx) {
+    var card = g('card-' + entry.id);
+    var ov   = g('ov-' + entry.id);
+    if (card) card.classList.add('converting');
+    if (ov)   ov.classList.add('on');
+
+    cvtOne(entry, s, idx)
+      .then(function(res) {
+        // FIX 8: stale promise from cleared session — discard silently
+        if (mySession !== sessionId) return;
+
+        // FIX 6: only write back if this entry is still in images[] (not removed mid-convert)
+        var stillExists = images.some(function(i) { return i.id === entry.id; });
+        if (!stillExists) {
+          removed++; // card was removed mid-convert — doesn't count as success or failure
+          checkAllDone();
+          return;
+        }
+
+        converted[entry.id] = res;
+        totalNew += res.newSize;
+        successes++;
+
+        if (card) { card.classList.remove('converting'); card.classList.add('cvt'); }
+        if (ov)   ov.classList.remove('on');
+        var bd = g('bd-' + entry.id); if (bd) bd.classList.add('on');
+        var bf = g('bf-' + entry.id); if (bf) bf.textContent = res.filename.split('.').pop().toUpperCase();
+        var mt = g('mt-' + entry.id);
+        if (mt) {
+          var sv  = entry.size - res.newSize;
+          var pct = entry.size > 0 ? Math.round(sv / entry.size * 100) : 0;
+          mt.innerHTML = fmt(entry.size)
+            + ' <span class="arr">→</span> <span class="ns">' + fmt(res.newSize) + '</span>'
+            + (sv > 0 ? ' <span class="spct">−' + pct + '%</span>'
+             : sv < 0 ? ' <span class="bpct">+' + Math.abs(pct) + '%</span>' : '');
+        }
+        var dl = g('dl-' + entry.id);
+        if (dl) dl.textContent = '⬇ Save .' + res.filename.split('.').pop().toUpperCase();
+        checkAllDone();
+      })
+      .catch(function(err) {
+        if (mySession !== sessionId) return; // FIX 8: stale
+        failures++;
+        if (card) { card.classList.remove('converting'); card.classList.add('failed'); }
+        if (ov)   ov.classList.remove('on');
+        var mt = g('mt-' + entry.id);
+        if (mt) mt.innerHTML = '<span style="color:var(--red)">⚠ ' + err.message + '</span>';
+        checkAllDone();
+      });
+  });
+};
+
+/* ═══════════════════════════════════════
+   DOWNLOAD SINGLE
+   FIX 2: reuse the same object URL per image on repeated clicks
+═══════════════════════════════════════ */
+function dlSingle(id) {
+  // Gate: require sign-in before downloading
+  if (!_session) {
+    _pendingAction = function() { dlSingle(id); };
+    openModal('signin', 'Create a free account to download your converted images.');
+    return;
+  }
+
+  var res   = converted[id];
+  var entry = images.find(function(i) { return i.id === id; });
+  if (!entry) return;
+
+  var url, name;
+  if (res) {
+    url  = getImgUrl(id); // reuses existing URL, creates once
+    if (!url) { toast('Download URL unavailable — try converting again', 'err'); return; }
+    name = res.filename;
+  } else {
+    url  = entry.dataUrl; // pre-conversion: use data URL directly
+    name = entry.name;
+  }
+
+  trigger(url, name);
+
+  var dl = g('dl-' + id);
+  if (dl) {
+    dl.textContent = '✓ Saved!'; dl.classList.add('saved');
+    setTimeout(function() {
+      dl.classList.remove('saved');
+      dl.textContent = res ? '⬇ Save .' + res.filename.split('.').pop().toUpperCase() : '⬇ Download';
+    }, 2200);
+  }
+}
+
+/* ═══════════════════════════════════════
+   ZIP DOWNLOAD
+   FIX 5: guard against JSZip not being loaded (CDN failure)
+═══════════════════════════════════════ */
+g('zipBtn').onclick = function() {
+  // Gate: require sign-in before downloading
+  if (!_session) {
+    _pendingAction = function() { g('zipBtn').onclick(); };
+    openModal('signin', 'Sign in to download your ZIP — free, takes 10 seconds.');
+    return;
+  }
+  // FIX 5: check JSZip is available before attempting
+  if (typeof JSZip === 'undefined') {
+    toast('ZIP library failed to load. Check your internet connection and reload.', 'err');
+    return;
+  }
+  var ids = Object.keys(converted);
+  if (!ids.length) { toast('Convert images first!', 'warn'); return; }
+
+  var btn = g('zipBtn');
+  btn.textContent = '⏳ Building ZIP…'; btn.disabled = true;
+
+  var zip    = new JSZip();
+  var folder = zip.folder('ConvertFast-export');
+  images.forEach(function(e) {
+    var r = converted[e.id];
+    if (r) folder.file(r.filename, r.blob);
+  });
+
+  zip.generateAsync({ type: 'blob', compression: 'DEFLATE', compressionOptions: { level: 6 } })
+    .then(function(zb) {
+      trigger(trackZipUrl(URL.createObjectURL(zb)), 'ConvertFast-export.zip');
+      btn.textContent = '✓ Downloaded!';
+      setTimeout(function() { btn.textContent = '📦 Download all as ZIP'; btn.disabled = false; }, 2500);
+      toast('ZIP with ' + ids.length + ' images saved!', 'good');
+    })
+    .catch(function(err) {
+      btn.textContent = '📦 Download all as ZIP'; btn.disabled = false;
+      toast('ZIP failed: ' + err.message, 'err');
+    });
+};
+
+/* ═══════════════════════════════════════
+   COPY DATA URLs
+   FIX 9: copies the CONVERTED blob data URLs (not the original pre-conversion
+   dataUrl). Falls back to original if that image hasn't been converted yet.
+═══════════════════════════════════════ */
+g('copyUrlBtn').onclick = function() {
+  if (!_session) {
+    _pendingAction = function() { g('copyUrlBtn').onclick(); };
+    openModal('signin', 'Sign in to copy your converted image URLs.');
+    return;
+  }
+  if (!images.length) { toast('No images loaded', 'warn'); return; }
+
+  var pendingConversions = [];
+  var parts = [];
+
+  images.forEach(function(img, i) {
+    var res = converted[img.id];
+    if (res) {
+      // FIX 9: read from the converted blob as a data URL
+      pendingConversions.push(new Promise(function(resolve) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          parts[i] = '/* ' + (i + 1) + '. ' + res.filename + ' (converted) */\n' + e.target.result;
+          resolve();
+        };
+        reader.onerror = function() {
+          parts[i] = '/* ' + (i + 1) + '. ' + res.filename + ' — read error */';
+          resolve();
+        };
+        reader.readAsDataURL(res.blob);
+      }));
+    } else {
+      // Not yet converted — use original dataUrl and label it clearly
+      parts[i] = '/* ' + (i + 1) + '. ' + img.name + ' (original, not yet converted) */\n' + img.dataUrl;
+      pendingConversions.push(Promise.resolve());
+    }
+  });
+
+  Promise.all(pendingConversions).then(function() {
+    var text = parts.join('\n\n');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text)
+        .then(function() { toast('Copied ' + images.length + ' data URLs (converted blobs)', 'good'); })
+        .catch(function() { fallbackCopy(text); });
+    } else { fallbackCopy(text); }
+  });
+};
+
+function fallbackCopy(text) {
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none';
+  document.body.appendChild(ta); ta.focus(); ta.select();
+  try   { document.execCommand('copy'); toast('Data URLs copied', 'good'); }
+  catch (e) { toast('Copy failed — please copy manually', 'err'); }
+  document.body.removeChild(ta);
+}
+
+/* ═══════════════════════════════════════
+   REMOVE CARD
+   FIX 1: reset conversion stats when a card is removed so they
+   don't show stale numbers (e.g. still showing "saved 40%" after removal)
+═══════════════════════════════════════ */
+function removeCard(id) {
+  images = images.filter(function(i) { return i.id !== id; });
+  delete converted[id];
+  // Revoke only this image's object URL if it exists
+  if (imgObjUrls[id]) {
+    try { URL.revokeObjectURL(imgObjUrls[id]); } catch(e) {}
+    delete imgObjUrls[id];
+  }
+  var c = g('card-' + id);
+  if (c) {
+    c.style.transition = 'all .2s';
+    c.style.opacity = '0';
+    c.style.transform = 'scale(.9)';
+    setTimeout(function() { c.remove(); }, 220);
+  }
+  // FIX 1: recalculate and update conversion stats live
+  recomputeStats();
+  updateUI();
+}
+
+// FIX 1: recompute stats from current converted{} entries
+function recomputeStats() {
+  var ids = Object.keys(converted);
+  if (!ids.length) {
+    g('stO').textContent = '—';
+    g('stC').textContent = '—';
+    g('stS').textContent = '—';
+    return;
+  }
+  var totalOrig = 0, totalNew = 0;
+  ids.forEach(function(id) {
+    var entry = images.find(function(i) { return i.id === parseInt(id); });
+    if (entry) totalOrig += entry.size;
+    totalNew += converted[id].newSize;
+  });
+  var sv  = totalOrig - totalNew;
+  var pct = totalOrig > 0 ? Math.round(sv / totalOrig * 100) : 0;
+  g('stO').textContent = fmt(totalOrig);
+  g('stC').textContent = fmt(totalNew);
+  g('stS').textContent = sv > 0 ? fmt(sv) + ' (' + pct + '%)' : sv < 0 ? '+' + fmt(-sv) : '—';
+}
+
+/* ═══════════════════════════════════════
+   CLEAR ALL
+   FIX 8: increment sessionId to invalidate any in-flight conversion promises
+═══════════════════════════════════════ */
+g('clearBtn').onclick = function() {
+  sessionId++;            // FIX 8: invalidates all running promises
+  converting = false;     // reset flag in case Clear hit mid-convert
+  revokeAllImgUrls();
+  images = []; converted = {};
+  g('ig').innerHTML = '';
+  g('zipBtn').disabled = true;
+  var dlSec = g('dlSection'); if (dlSec) dlSec.style.display = 'none';
+  ['stN','stO','stC','stS'].forEach(function(id) {
+    g(id).textContent = id === 'stN' ? '0' : '—';
+  });
+  var btn = g('cvtBtn');
+  btn.textContent = '⚡ Convert all images';
+  btn.classList.remove('done');
+  btn.disabled = false;
+  updateUI();
+};
+
+/* ═══════════════════════════════════════
+   UPDATE UI
+═══════════════════════════════════════ */
+function updateUI() {
+  var has = images.length > 0;
+  g('sidebar').classList.toggle('on', has);
+  g('sbar').classList.toggle('on', has);
+  g('stN').textContent = images.length;
+}
+
+/* ═══════════════════════════════════════
+   FAQ
+═══════════════════════════════════════ */
+var faqs = [
+  ['Does ConvertFast ever upload my images to a server?',
+   'Never. All conversion, resizing, and compression happens entirely in your browser using the HTML5 Canvas API. Your images never leave your device. No server receives them, no logs are created, no data is collected. You can disconnect from the internet after the page loads and it will still work.'],
+  ['What is the file size limit?',
+   'There is no file size limit. Unlike ImageToURL (capped at 2MB) or TinyPNG (capped at 5MB), ConvertFast processes everything locally so your device memory is the only real constraint. You can convert 50MB RAW photo exports, large PNG screenshots — anything.'],
+  ['What output formats are supported?',
+   'JPEG, PNG, WebP, GIF, and BMP. WebP delivers the smallest file sizes at comparable quality. JPEG is universally compatible. PNG is lossless. If you select "Keep original format" and the source is an unsupported type like AVIF or TIFF, ConvertFast safely falls back to PNG rather than producing a broken file.'],
+  ['What does "Strip EXIF metadata" mean?',
+   'Every photo taken on a smartphone or DSLR contains hidden EXIF data — GPS coordinates of where you were, your device model, serial number, timestamps, and more. By redrawing the image through the Canvas API (which all conversion does), this metadata is automatically discarded. None of it ends up in your downloaded files.'],
+  ['How does the batch rename pattern work?',
+   '{n} is replaced with a zero-padded sequence number (001, 002, 003…) and {name} with the original filename minus its extension. For example "holiday-{n}" converts IMG_4821.jpg into holiday-001.jpg, IMG_4822.jpg into holiday-002.jpg, and so on across all 300 files at once. If your pattern has no {n}, ConvertFast warns you because all files would share the same name and overwrite each other in the ZIP.'],
+  ['How does the ZIP download work?',
+   'After clicking Convert All, the Download ZIP button activates. It bundles all your converted images into a single .zip archive using JSZip and downloads it to your device. The ZIP button stays disabled until conversion is complete so you never download an empty archive.'],
+  ['Why does converting PNG to JPEG sometimes make the file bigger?',
+   'PNG uses lossless compression and is very efficient for images with flat areas of color — screenshots, diagrams, graphics. JPEG is lossy and optimized for photos with complex gradients. Converting a screenshot to JPEG can actually produce a larger file. Try WebP instead — it handles both photo and graphic content efficiently.'],
+  ['What is the difference between ConvertFast and ImageToURL?',
+   'ImageToURL uploads your images to their servers and returns a hosted URL. ConvertFast never uploads anything — it converts locally and lets you download the result. ImageToURL caps files at 2MB and handles one image at a time. ConvertFast has no size limit, handles 300 images simultaneously, converts between 6 formats, resizes in bulk, strips EXIF, supports batch renaming, and exports to ZIP — none of which ImageToURL offers.']
+];
+
+var fw = g('faqWrap');
+faqs.forEach(function(faq) {
+  var item = document.createElement('div'); item.className = 'fi-item';
+  var q    = document.createElement('div'); q.className = 'fq';
+  q.innerHTML = faq[0] + ' <span class="ficon">+</span>';
+  var a  = document.createElement('div'); a.className = 'fa';
+  var ai = document.createElement('div'); ai.className = 'fa-in'; ai.textContent = faq[1];
+  a.appendChild(ai); item.appendChild(q); item.appendChild(a); fw.appendChild(item);
+  q.addEventListener('click', function() {
+    var open = q.classList.contains('open');
+    fw.querySelectorAll('.fq').forEach(function(x) { x.classList.remove('open'); });
+    fw.querySelectorAll('.fa').forEach(function(x) { x.classList.remove('open'); });
+    if (!open) { q.classList.add('open'); a.classList.add('open'); }
+  });
+});
+
+/* ── PRICING TOGGLE ── */
+var annToggle = g('annToggle');
+if (annToggle) {
+  annToggle.addEventListener('change', function() {
+    var ann = this.checked;
+    g('proAmt').textContent  = ann ? '5'  : '6';
+    g('teamAmt').textContent = ann ? '15' : '19';
+    g('proPer').textContent  = ann ? 'per month, billed $54/yr' : 'per month, billed monthly';
+    g('teamPer').textContent = ann ? 'per seat / month, billed $171/yr — founding price' : 'per seat / month — founding price, locked forever';
+    g('lblMonthly').classList.toggle('active', !ann);
+    g('lblAnnual').classList.toggle('active',   ann);
+  });
+}
+
+})(); // end main IIFE
+</script>
+
+<!-- ═══════════════════════════════════════
+     AUTH (Clerk) + STRIPE  — global scope
+════════════════════════════════════════ -->
+
+<!-- Modal CSS -->
+<style>
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);z-index:1000;display:none;align-items:center;justify-content:center}
+.modal-backdrop.on{display:flex}
+.modal{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:2.2rem 2rem;width:100%;max-width:380px;position:relative;animation:mdin .25s ease}
+@keyframes mdin{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}
+.modal-close{position:absolute;top:.9rem;right:.9rem;background:transparent;border:none;color:var(--muted);font-size:1.1rem;cursor:pointer;line-height:1;padding:.2rem .4rem;border-radius:4px}
+.modal-close:hover{color:var(--ink);background:var(--s2)}
+.modal-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;letter-spacing:-.03em;margin-bottom:1.4rem;text-align:center}
+.modal-logo span{color:var(--yellow)}
+.modal h2{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:.35rem;letter-spacing:-.02em}
+.modal p{font-size:.65rem;color:var(--muted2);margin-bottom:1.4rem;line-height:1.6}
+.modal-field{margin-bottom:.9rem}
+.modal-field label{display:block;font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.32rem}
+.modal-field input{width:100%;background:var(--s2);border:1px solid var(--border);border-radius:6px;padding:.58rem .75rem;color:var(--ink);font-family:'DM Mono',monospace;font-size:.75rem;transition:border-color .15s}
+.modal-field input:focus{outline:none;border-color:var(--yellow)}
+.modal-field input.err{border-color:var(--red)}
+.modal-err{font-size:.58rem;color:var(--red);margin-top:.25rem;display:none}
+.modal-err.on{display:block}
+.modal-submit{width:100%;padding:.75rem;background:var(--yellow);color:#0d0d0d;border:none;border-radius:7px;font-family:'Syne',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .15s;margin-top:.3rem}
+.modal-submit:hover{background:#e8b820}
+.modal-submit:disabled{opacity:.5;cursor:not-allowed}
+.modal-divider{display:flex;align-items:center;gap:.7rem;margin:1rem 0}
+.modal-divider span{font-size:.58rem;color:var(--muted);white-space:nowrap}
+.modal-divider::before,.modal-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.modal-switch{text-align:center;font-size:.62rem;color:var(--muted2);margin-top:1rem}
+.modal-switch a{color:var(--yellow);cursor:pointer;text-decoration:none}
+.modal-switch a:hover{text-decoration:underline}
+.google-btn{width:100%;padding:.65rem;background:var(--s2);border:1px solid var(--border);border-radius:7px;font-family:'Syne',sans-serif;font-weight:600;font-size:.68rem;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.6rem;transition:background .15s}
+.google-btn:hover{background:var(--s3);border-color:var(--b2)}
+.google-icon{width:16px;height:16px}
+.plan-select{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:1.1rem}
+.ps-card{border:1px solid var(--border);border-radius:7px;padding:.8rem;cursor:pointer;transition:all .15s;text-align:center}
+.ps-card:hover{border-color:var(--b2)}
+.ps-card.selected{border-color:var(--yellow);background:var(--ydim)}
+.ps-name{font-family:'Syne',sans-serif;font-weight:700;font-size:.7rem;margin-bottom:.2rem}
+.ps-price{font-size:.58rem;color:var(--muted2)}
+.ps-card.selected .ps-price{color:var(--yellow)}
+</style>
+
+<script>
+var currentPlan = 'free';
+window.__imgMax = 10;
+var _pendingAction = null; // stored action to run after sign-in
+
+/* ════════════════════════════════
+   MOCK AUTH  (works in preview)
+   Swaps to real Clerk automatically
+   once CLERK_PUBLISHABLE_KEY is set
+════════════════════════════════ */
+
+// Demo users stored in memory (replaced by real Clerk+Supabase in production)
+var _session = null; // { email, name, avatar, plan }
+
+function clerkSignIn()  { openModal('signin'); }
+function clerkSignOut() {
+  _session = null;
+  currentPlan = 'free';
+  window.__imgMax = 10;
+  renderAuthBar();
+  showToast('Signed out', 'info');
+}
+
+/* ── Modal system ── */
+function openModal(view, hint) {
+  var backdrop = document.getElementById('authModal');
+  if (!backdrop) buildModal();
+  renderModalView(view || 'signin', hint);
+  document.getElementById('authModal').classList.add('on');
+  setTimeout(function() {
+    var f = document.querySelector('#authModal input');
+    if (f) f.focus();
+  }, 80);
+}
+function closeModal() {
+  var m = document.getElementById('authModal');
+  if (m) m.classList.remove('on');
+}
+
+function buildModal() {
+  var backdrop = document.createElement('div');
+  backdrop.id = 'authModal';
+  backdrop.className = 'modal-backdrop';
+  backdrop.addEventListener('click', function(e) {
+    if (e.target === backdrop) closeModal();
+  });
+  backdrop.innerHTML = '<div class="modal" id="authModalInner"></div>';
+  document.body.appendChild(backdrop);
+}
+
+function renderModalView(view, hint) {
+  var inner = document.getElementById('authModalInner');
+  if (!inner) return;
+  inner.innerHTML = '';
+
+  // ── helpers ──────────────────────────────────────────────────────────────
+  function el(tag, attrs, text) {
+    var e = document.createElement(tag);
+    Object.keys(attrs||{}).forEach(function(k){ e.setAttribute(k, attrs[k]); });
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function field(labelText, inputAttrs, inputId) {
+    var wrap  = el('div', {class:'modal-field'});
+    var lbl   = el('label', {}, labelText);
+    var input = el('input', Object.assign({id: inputId}, inputAttrs));
+    wrap.appendChild(lbl); wrap.appendChild(input);
+    return wrap;
+  }
+  function googleBtn(label) {
+    var btn = el('button', {class:'google-btn'});
+    btn.innerHTML = '<svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg> ';
+    btn.appendChild(document.createTextNode(label));
+    btn.addEventListener('click', mockGoogleSignIn);
+    return btn;
+  }
+  function divider() {
+    var d = el('div', {class:'modal-divider'});
+    d.appendChild(el('span', {}, 'or'));
+    return d;
+  }
+  function submitBtn(text, handler) {
+    var b = el('button', {class:'modal-submit'}, text);
+    b.addEventListener('click', handler);
+    return b;
+  }
+  function closeBtn() {
+    var b = el('button', {class:'modal-close'}, '\u2715');
+    b.addEventListener('click', closeModal);
+    return b;
+  }
+  function logo() {
+    var d = el('div', {class:'modal-logo'});
+    d.innerHTML = 'Convert<span style="color:var(--yellow)">Fast</span>';
+    return d;
+  }
+  function errBox(id) { return el('div', {class:'modal-err', id:id}); }
+
+  // ── Sign in ───────────────────────────────────────────────────────────────
+  if (view === 'signin') {
+    if (hint) {
+      var hintEl = el('div', {style:'background:var(--ydim);border:1px solid rgba(245,200,66,.2);border-radius:6px;padding:.55rem .8rem;font-size:.62rem;color:var(--yellow);margin-bottom:1rem;line-height:1.5'}, hint);
+      inner.appendChild(hintEl);
+    }
+    var emailF = field('Email',    {type:'email',    placeholder:'you@example.com'}, 'siEmail');
+    var passF  = field('Password', {type:'password', placeholder:'\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022'}, 'siPass');
+    var err    = errBox('siErr');
+    var sub    = submitBtn('Sign in', submitSignIn);
+    var sw     = el('div', {class:'modal-switch'});
+    var swLink = el('a', {}, 'Create one free \u2192');
+    swLink.style.cursor = 'pointer'; swLink.style.color = 'var(--yellow)';
+    swLink.addEventListener('click', function(){ renderModalView('signup'); });
+    sw.appendChild(document.createTextNode('No account? '));
+    sw.appendChild(swLink);
+
+    // Enter key on inputs
+    [emailF, passF].forEach(function(f) {
+      f.querySelector('input').addEventListener('keydown', function(e){ if(e.keyCode===13) submitSignIn(); });
+    });
+
+    [closeBtn(), logo(),
+     el('h2',{}, 'Welcome back'),
+     el('p',{}, 'Sign in to your account to access your plan and settings.'),
+     googleBtn('Continue with Google'), divider(),
+     emailF, passF, err, sub, sw
+    ].forEach(function(n){ inner.appendChild(n); });
+
+  // ── Sign up ───────────────────────────────────────────────────────────────
+  } else if (view === 'signup') {
+    var nameF  = field('Name',     {type:'text',     placeholder:'Your name'},         'suName');
+    var emailF = field('Email',    {type:'email',    placeholder:'you@example.com'},   'suEmail');
+    var passF  = field('Password', {type:'password', placeholder:'Min 8 characters'},  'suPass');
+    var err    = errBox('suErr');
+    var sub    = submitBtn('Create free account', submitSignUp);
+    var sw     = el('div', {class:'modal-switch'});
+    var swLink = el('a', {}, 'Sign in \u2192');
+    swLink.style.cursor = 'pointer'; swLink.style.color = 'var(--yellow)';
+    swLink.addEventListener('click', function(){ renderModalView('signin'); });
+    sw.appendChild(document.createTextNode('Already have an account? '));
+    sw.appendChild(swLink);
+
+    [nameF, emailF, passF].forEach(function(f) {
+      f.querySelector('input').addEventListener('keydown', function(e){ if(e.keyCode===13) submitSignUp(); });
+    });
+
+    [closeBtn(), logo(),
+     el('h2',{}, 'Create your account'),
+     el('p',{}, 'Free forever. Upgrade to Pro any time for unlimited images.'),
+     googleBtn('Sign up with Google'), divider(),
+     nameF, emailF, passF, err, sub, sw
+    ].forEach(function(n){ inner.appendChild(n); });
+
+  // ── Plan picker ───────────────────────────────────────────────────────────
+  } else if (view === 'plans') {
+    var ps   = el('div', {class:'plan-select'});
+    var free = el('div', {class:'ps-card selected', id:'psFree'});
+    free.innerHTML = '<div class="ps-name">Free</div><div class="ps-price">$0 forever</div>';
+    free.addEventListener('click', function(){ selectPlan('free'); });
+    var pro  = el('div', {class:'ps-card', id:'psPro'});
+    pro.innerHTML  = '<div class="ps-name">Pro \u2726</div><div class="ps-price">$9 / month</div>';
+    pro.addEventListener('click', function(){ selectPlan('pro'); });
+    ps.appendChild(free); ps.appendChild(pro);
+
+    var contBtn = submitBtn('Continue with Free \u2192', confirmPlan);
+    contBtn.id = 'planContinueBtn';
+
+    [closeBtn(), logo(),
+     el('h2',{}, 'Choose your plan'),
+     el('p',{}, 'You are all set! Pick a plan or start free - upgrade any time.'),
+     ps, contBtn
+    ].forEach(function(n){ inner.appendChild(n); });
+  }
+}
+
+var _selectedPlan = 'free';
+function selectPlan(plan) {
+  _selectedPlan = plan;
+  var free = document.getElementById('psFree');
+  var pro  = document.getElementById('psPro');
+  var btn  = document.getElementById('planContinueBtn');
+  if (free) free.classList.toggle('selected', plan === 'free');
+  if (pro)  pro.classList.toggle('selected',  plan === 'pro');
+  if (btn)  btn.textContent = plan === 'pro' ? 'Get Pro → $9/mo' : 'Continue with Free →';
+}
+
+function confirmPlan() {
+  if (_selectedPlan === 'pro') {
+    closeModal();
+    startCheckout('pro');
+  } else {
+    closeModal();
+    completeSignIn(_session);
+    showToast('Welcome to ConvertFast! You are on the Free plan.', 'good');
+  }
+}
+
+/* ── Sign in / Sign up handlers ── */
+function submitSignIn() {
+  var email = (document.getElementById('siEmail') || {}).value || '';
+  var pass  = (document.getElementById('siPass')  || {}).value || '';
+  var err   = document.getElementById('siErr');
+
+  if (!email || !email.includes('@')) {
+    showFieldErr('siEmail', err, 'Please enter a valid email address.'); return;
+  }
+  if (!pass) {
+    showFieldErr('siPass', err, 'Please enter your password.'); return;
+  }
+
+  var btn = document.querySelector('#authModalInner .modal-submit');
+  if (btn) { btn.textContent = 'Signing in…'; btn.disabled = true; }
+
+  // Simulate auth delay
+  setTimeout(function() {
+    _session = {
+      email:  email,
+      name:   email.split('@')[0],
+      avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=' + encodeURIComponent(email),
+      plan:   'free'
+    };
+    closeModal();
+    completeSignIn(_session);
+    showToast('Welcome back!', 'good');
+  }, 800);
+}
+
+function submitSignUp() {
+  var name  = (document.getElementById('suName')  || {}).value || '';
+  var email = (document.getElementById('suEmail') || {}).value || '';
+  var pass  = (document.getElementById('suPass')  || {}).value || '';
+  var err   = document.getElementById('suErr');
+
+  if (!name.trim()) {
+    showFieldErr('suName', err, 'Please enter your name.'); return;
+  }
+  if (!email || !email.includes('@')) {
+    showFieldErr('suEmail', err, 'Please enter a valid email.'); return;
+  }
+  if (!pass || pass.length < 8) {
+    showFieldErr('suPass', err, 'Password must be at least 8 characters.'); return;
+  }
+
+  var btn = document.querySelector('#authModalInner .modal-submit');
+  if (btn) { btn.textContent = 'Creating account…'; btn.disabled = true; }
+
+  setTimeout(function() {
+    _session = {
+      email:  email,
+      name:   name,
+      avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=' + encodeURIComponent(name),
+      plan:   'free'
+    };
+    _selectedPlan = 'free';
+    renderModalView('plans');
+  }, 700);
+}
+
+function mockGoogleSignIn() {
+  var btn = document.querySelector('#authModalInner .google-btn');
+  if (btn) { btn.textContent = 'Connecting…'; btn.disabled = true; }
+  setTimeout(function() {
+    _session = {
+      email:  'user@gmail.com',
+      name:   'Google User',
+      avatar: 'https://api.dicebear.com/7.x/initials/svg?seed=GU',
+      plan:   'free'
+    };
+    closeModal();
+    completeSignIn(_session);
+    showToast('Signed in with Google!', 'good');
+  }, 900);
+}
+
+function showFieldErr(inputId, errEl, msg) {
+  var input = document.getElementById(inputId);
+  if (input) input.classList.add('err');
+  if (errEl) { errEl.textContent = msg; errEl.classList.add('on'); }
+}
+
+/* ── After sign in: update UI ── */
+function completeSignIn(session) {
+  currentPlan       = session.plan || 'free';
+  window.__imgMax   = (currentPlan === 'pro' || currentPlan === 'team') ? 99999 : 10;
+
+  var av = document.getElementById('userAvatar');
+  var em = document.getElementById('userEmail');
+  if (av) av.src = session.avatar || '';
+  if (em) em.textContent = session.email || '';
+
+  renderAuthBar();
+
+  // Resume whatever the user was trying to do before sign-in intercepted
+  if (_pendingAction) {
+    var action = _pendingAction;
+    _pendingAction = null;
+    setTimeout(action, 300); // small delay so modal closes first
+  }
+}
+
+function renderAuthBar() {
+  var chip    = document.getElementById('userChip');
+  var badge   = document.getElementById('planBadge');
+  var signIn  = document.getElementById('signInBtn');
+  var signOut = document.getElementById('signOutBtn');
+
+  if (_session) {
+    if (chip)    { chip.style.display = 'flex'; }
+    if (signIn)  { signIn.style.display = 'none'; }
+    if (signOut) { signOut.style.display = 'block'; }
+    if (badge) {
+      badge.style.display  = 'inline-block';
+      badge.textContent    = currentPlan[0].toUpperCase() + currentPlan.slice(1);
+      badge.className      = 'plan-badge plan-' + currentPlan;
+    }
+  } else {
+    if (chip)    { chip.style.display = 'none'; }
+    if (badge)   { badge.style.display = 'none'; }
+    if (signIn)  { signIn.style.display = 'block'; }
+    if (signOut) { signOut.style.display = 'none'; }
+  }
+}
+
+/* ── Boot: show sign in button ── */
+window.addEventListener('load', function() {
+  setTimeout(renderAuthBar, 100);
+
+  // If real Clerk is available (production), use it instead
+  var attempts = 0;
+  var poll = setInterval(function() {
+    attempts++;
+    if (window.Clerk) {
+      clearInterval(poll);
+      window.Clerk.load().then(function() {
+        window.__clerk = window.Clerk;
+        window.Clerk.addListener(function(res) {
+          res.user ? onRealSignedIn(res.user) : onRealSignedOut();
+        });
+        window.Clerk.user ? onRealSignedIn(window.Clerk.user) : onRealSignedOut();
+      }).catch(function() { renderAuthBar(); });
+    }
+    if (attempts > 50) { clearInterval(poll); renderAuthBar(); }
+  }, 100);
+});
+
+async function onRealSignedIn(user) {
+  try {
+    var token = await window.Clerk.session.getToken();
+    var res   = await fetch('/api/me', { headers: { Authorization: 'Bearer ' + token } });
+    var plan  = res.ok ? (await res.json()).plan || 'free' : 'free';
+    _session  = {
+      email:  user.primaryEmailAddress?.emailAddress || user.username || '',
+      name:   user.fullName || '',
+      avatar: user.imageUrl || '',
+      plan:   plan
+    };
+    completeSignIn(_session);
+  } catch(e) { renderAuthBar(); }
+}
+
+function onRealSignedOut() {
+  _session = null; currentPlan = 'free'; window.__imgMax = 10;
+  renderAuthBar();
+}
+
+/* ── Stripe Checkout ── */
+async function startCheckout(plan) {
+  // In preview (no Clerk): show a toast explaining it's demo
+  if (!window.__clerk) {
+    showToast('Payments active on your live site — connect Stripe in Vercel env vars.', 'info');
+    return;
+  }
+  if (!window.__clerk.user) { clerkSignIn(); return; }
+
+  var btn  = event && (event.currentTarget || event.target);
+  var orig = btn ? btn.textContent : '';
+  if (btn) { btn.textContent = 'Redirecting…'; btn.disabled = true; }
+
+  try {
+    var token  = await window.__clerk.session.getToken();
+    var annual = !!(document.getElementById('annToggle') || {}).checked;
+    var res    = await fetch('/api/create-checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
+      body: JSON.stringify({ plan: plan, annual: annual })
+    });
+    var data = await res.json();
+    if (data.url) window.location.href = data.url;
+    else throw new Error(data.error || 'No checkout URL');
+  } catch(e) {
+    showToast('Checkout error: ' + e.message, 'err');
+    if (btn) { btn.textContent = orig; btn.disabled = false; }
+  }
+}
+</script>
+</body>
+</html>

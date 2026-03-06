@@ -1,0 +1,15 @@
+{
+  "name": "imgdrop",
+  "version": "1.0.0",
+  "description": "Free bulk image converter with Stripe payments and Clerk auth",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@clerk/backend": "^1.0.0",
+    "@supabase/supabase-js": "^2.39.0",
+    "stripe": "^14.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
