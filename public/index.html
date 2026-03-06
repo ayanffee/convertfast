@@ -1310,10 +1310,25 @@ function clerkSignOut() {
 function openModal(view, hint) {
   var clerk = window.Clerk || window.__clerk;
   if (clerk) {
+    var existing = document.getElementById('clerkModal');
+    if (!existing) {
+      existing = document.createElement('div');
+      existing.id = 'clerkModal';
+      existing.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;display:flex;align-items:center;justify-content:center;';
+      existing.addEventListener('click', function(e) {
+        if (e.target === existing) { existing.remove(); }
+      });
+      var mount = document.createElement('div');
+      mount.id = 'clerkMount';
+      existing.appendChild(mount);
+      document.body.appendChild(existing);
+    }
+    existing.style.display = 'flex';
+    var mount = document.getElementById('clerkMount');
     if (view === 'signup') {
-      clerk.openSignUp({ afterSignUpUrl: window.location.href });
+      clerk.mountSignUp(mount, { afterSignUpUrl: window.location.href });
     } else {
-      clerk.openSignIn({ afterSignInUrl: window.location.href });
+      clerk.mountSignIn(mount, { afterSignInUrl: window.location.href });
     }
     return;
   }
@@ -1321,10 +1336,7 @@ function openModal(view, hint) {
   if (!backdrop) buildModal();
   renderModalView(view || 'signin', hint);
   document.getElementById('authModal').classList.add('on');
-  setTimeout(function() {
-    var f = document.querySelector('#authModal input');
-    if (f) f.focus();
-  }, 80);
+  setTimeout(function() { var f = document.querySelector('#authModal input'); if (f) f.focus(); }, 80);
 }
 function closeModal() {
   var m = document.getElementById('authModal');
