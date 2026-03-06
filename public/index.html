@@ -1308,6 +1308,15 @@ function clerkSignOut() {
 
 /* ── Modal system ── */
 function openModal(view, hint) {
+  var clerk = window.Clerk || window.__clerk;
+  if (clerk) {
+    if (view === 'signup') {
+      clerk.openSignUp({ afterSignUpUrl: window.location.href });
+    } else {
+      clerk.openSignIn({ afterSignInUrl: window.location.href });
+    }
+    return;
+  }
   var backdrop = document.getElementById('authModal');
   if (!backdrop) buildModal();
   renderModalView(view || 'signin', hint);
