@@ -1648,13 +1648,13 @@ function onRealSignedOut() {
 }
 
 /* ── Stripe Checkout ── */
-async function startCheckout(plan) {
-  // In preview (no Clerk): show a toast explaining it's demo
-  if (!window.__clerk) {
-    showToast('Payments active on your live site — connect Stripe in Vercel env vars.', 'info');
+async async function startCheckout(plan) {
+  // If not signed in, gate and resume after sign-in
+  if (!window.__clerk || !window.__clerk.user) {
+    _pendingAction = function() { startCheckout(plan); };
+    showModal('signin', 'Sign in to upgrade to ' + plan);
     return;
   }
-  if (!window.__clerk.user) { clerkSignIn(); return; }
 
   var btn  = event && (event.currentTarget || event.target);
   var orig = btn ? btn.textContent : '';
