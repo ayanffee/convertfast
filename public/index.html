@@ -1474,8 +1474,12 @@ function confirmPlan() {
     startCheckout('pro');
   } else {
     closeModal();
-    completeSignIn(_session);
     showToast('Welcome to ConvertFast! You are on the Free plan.', 'good');
+    if (_pendingAction) {
+      var action = _pendingAction;
+      _pendingAction = null;
+      setTimeout(action, 300);
+    }
   }
 }
 
@@ -1651,8 +1655,9 @@ function onRealSignedOut() {
 
 /* ── Stripe Checkout ── */
 async function startCheckout(plan) {
+  var clerk = window.Clerk || window.__clerk;
   // If not signed in, gate and resume after sign-in
-  if (!window.__clerk || !window.__clerk.user) {
+  if (!clerk || !clerk.user) {
     _pendingAction = function() { startCheckout(plan); };
     openModal('signin');
     return;
@@ -1664,7 +1669,7 @@ async function startCheckout(plan) {
 
   var annual = !!(document.getElementById('annToggle') || {}).checked;
 
-  window.__clerk.session.getToken().then(function(token) {
+  clerk.session.getToken().then(function(token) {
     return fetch('/api/create-checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
