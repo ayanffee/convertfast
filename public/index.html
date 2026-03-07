@@ -1299,11 +1299,14 @@ var _session = null; // { email, name, avatar, plan }
 
 function clerkSignIn()  { openModal('signin'); }
 function clerkSignOut() {
-  _session = null;
-  currentPlan = 'free';
-  window.__imgMax = 10;
-  renderAuthBar();
-  toast('Signed out', 'info');
+  var clerk = window.Clerk || window.__clerk;
+  if (clerk && clerk.signOut) {
+    clerk.signOut().then(function() { window.location.reload(); });
+  } else {
+    _session = null; currentPlan = 'free'; window.__imgMax = 10;
+    renderAuthBar();
+    toast('Signed out', 'info');
+  }
 }
 
 /* ── Modal system ── */
@@ -1634,6 +1637,8 @@ function renderAuthBar() {
 window.addEventListener('load', function() {
   setTimeout(renderAuthBar, 100);
 
+  var isPostCheckout = window.location.search.indexOf('checkout=success') !== -1;
+
   // If real Clerk is available (production), use it instead
   var attempts = 0;
   var poll = setInterval(function() {
@@ -1645,7 +1650,15 @@ window.addEventListener('load', function() {
           if (res.user) { onRealSignedIn(res.user); } else { onRealSignedOut(); }
         });
         // Also check immediately on load
-        if (window.Clerk.user) onRealSignedIn(window.Clerk.user);
+        if (window.Clerk.user) {
+          if (isPostCheckout) {
+            // After checkout: sign in first, then re-fetch plan (Stripe webhook may take a moment)
+            onRealSignedIn(window.Clerk.user);
+            setTimeout(refreshPlanFromApi, 3000);
+          } else {
+            onRealSignedIn(window.Clerk.user);
+          }
+        }
         window.__clerk = window.Clerk;
       }).catch(function() { renderAuthBar(); });
     }
@@ -1654,13 +1667,16 @@ window.addEventListener('load', function() {
 });
 
 async function onRealSignedIn(user) {
-  window.Clerk.session.getToken().then(function(token) {
+  var session = (window.Clerk && window.Clerk.session) ||
+    (window.Clerk && window.Clerk.client && window.Clerk.client.activeSessions && window.Clerk.client.activeSessions[0]);
+  if (!session) { renderAuthBar(); return; }
+  session.getToken().then(function(token) {
     return fetch('/api/me', { headers: { Authorization: 'Bearer ' + token } });
   }).then(function(res) {
     return res.ok ? res.json() : { plan: 'free' };
   }).then(function(data) {
     var plan = data.plan || 'free';
-    _session  = {
+    _session = {
       email:  user.primaryEmailAddress?.emailAddress || user.username || '',
       name:   user.fullName || '',
       avatar: user.imageUrl || '',
@@ -1668,6 +1684,24 @@ async function onRealSignedIn(user) {
     };
     completeSignIn(_session);
   }).catch(function() { renderAuthBar(); });
+}
+
+function refreshPlanFromApi() {
+  var clerk = window.Clerk || window.__clerk;
+  if (!clerk || !clerk.user) return;
+  var session = clerk.session ||
+    (clerk.client && clerk.client.activeSessions && clerk.client.activeSessions[0]);
+  if (!session) return;
+  session.getToken().then(function(token) {
+    return fetch('/api/me', { headers: { Authorization: 'Bearer ' + token } });
+  }).then(function(res) { return res.ok ? res.json() : { plan: 'free' }; })
+  .then(function(data) {
+    var plan = data.plan || 'free';
+    currentPlan = plan; window.__imgMax = (plan === 'pro' || plan === 'team') ? 99999 : 10;
+    if (_session) _session.plan = plan;
+    renderAuthBar();
+    if (plan !== 'free') toast('Plan activated: ' + plan[0].toUpperCase() + plan.slice(1) + '!', 'good');
+  }).catch(function() {});
 }
 
 function onRealSignedOut() {
