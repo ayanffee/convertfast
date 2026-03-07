@@ -44,6 +44,9 @@ export default async function handler(req, res) {
     success_url: `${process.env.APP_URL}/?checkout=success`,
     cancel_url: `${process.env.APP_URL}/?checkout=cancelled`,
     allow_promotion_codes: true,
+    subscription_data: {
+      metadata: { clerkUserId: userId }
+    }
   });
 
   return res.status(200).json({ url: session.url });
